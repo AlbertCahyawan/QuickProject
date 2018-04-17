@@ -1,23 +1,44 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+//import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-export default class App extends React.Component {
+import store from './store';
+import MainScreen from './screens/MainScreen';
+
+export default class App extends Component {
   render() {
+      const MainNavigator = StackNavigator ({
+        Main: { screen: MainScreen }
+      });
+
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Provider store={store}>
+        <MainNavigator />
+      </Provider>
     );
   }
 }
 
+/*
+
+<View style={styles.container}>
+
+  <View style={styles.top}>
+  </View>
+
+  <Text> ass </Text>
+</View>
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+
+
+  top:{
+    height: '20%',
+    backgroundColor: 'green',
   },
 });
+*/
