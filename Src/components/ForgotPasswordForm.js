@@ -13,7 +13,7 @@ class LoginForm extends Component {
             barStyle="light-content"/>
 
         <TextInput
-        placeholder="username or email"
+        placeholder="email"
         placeholderTextColor="grey"
         returnKeyType="next"
         onSubmitEDITING={() => this.passwordInput.focus()}
@@ -23,25 +23,11 @@ class LoginForm extends Component {
         style={styles.input}>
 
         </TextInput>
-        
-        <TextInput
-        placeholder="Password"
-        placeholderTextColor="grey"
-        returnKeyType="send"
-        secureTextEntry
-        style={styles.input}
-        ref={(input) => this.passwordInput = input}>
-            
-        </TextInput>
-
-        <Text
-         style={styles.forgotPassword}
-        >Forgot password</Text>
-
+           
         <TouchableOpacity
         style={styles.buttonContainer}>
         <Button  
-          title="Login"
+          title="Reset Password"
           onPress={() => this.props.navigation.navigate('Main')}
         />   
         </TouchableOpacity>
@@ -49,31 +35,11 @@ class LoginForm extends Component {
         <TouchableOpacity
         style={styles.buttonContainer}>
         <Button  
-          title="SignUp"
-          onPress={() => this.props.navigation.navigate('Main')}
+          title="Back"
+          onPress={() => this.props.navigation.goBack()}
         />   
         </TouchableOpacity>
-
-        <View style={styles.socialMediaButtonContainer} >
-        
-        <TouchableOpacity
-        style={styles.socialMediaButton}>
-        <Button 
-          
-          title="Facebook"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-        style={styles.socialMediaButton}>
-        <Button 
-          
-          title="Google"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-        </View>
+ 
         
         </View>
     );
@@ -90,8 +56,7 @@ const styles = {
         height: 40,
         backgroundColor: 'white',
         color: 'white', 
-        borderColor: '#d6d7da',
-        borderStyle: 'solid',
+        borderStyle: 'solid', 
     },
     buttonContainer: {
         paddingHorizontal: 10,

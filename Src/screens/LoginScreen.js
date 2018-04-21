@@ -57,7 +57,7 @@ const styles = {
     logoContainer:{
         alignItems: 'center',
         justifyContent: 'center',
-        height: '50%',
+        height: '40%',
     },
     loginFormContainer:{ 
     },

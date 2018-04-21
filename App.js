@@ -7,13 +7,18 @@ import store from './Src/store';
 
 import SplashScreen from './Src/screens/SplashScreen';
 import MainScreen from './Src/screens/MainScreen';
-import LoginScreen from './Src/screens/LoginScreen';
+import LoginScreen from './Src/screens/LoginScreen';   
+import ForgotPasswordScreen from './Src/screens/ForgotPasswordScreen';
+import RegisterScreen from './Src/screens/RegisterScreen';
+
+
 import ModalScreen from './Src/modals/ModalScreen';
 import testScreen from './Src/screens/testScreen';
 
 import SideBar from "./Src/SideBar/SideBar.js";  
   
-import Expo from "expo"; 
+import Expo from "expo";  
+
   
 export default class App extends Component {
 
@@ -38,12 +43,15 @@ export default class App extends Component {
       {
         Main: { screen: MainScreen },  
         Login: { screen: LoginScreen },
+        Register: { screen: RegisterScreen },
+        ForgotPwd: { screen: ForgotPasswordScreen },
+
         Splash: { screen: SplashScreen }, 
         MyModal: { screen: ModalScreen },
         test: { screen: testScreen },   
       },
       {
-        initialRouteName: 'Login', 
+        initialRouteName: 'Main', 
         contentComponent: props => <SideBar {...props} />,
         drawerPosition: 'left',
         contentOptions: {

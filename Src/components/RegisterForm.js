@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { connectStyle } from 'native-base';
 import { withNavigation } from 'react-navigation'; 
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -13,15 +13,35 @@ class LoginForm extends Component {
             barStyle="light-content"/>
 
         <TextInput
-        placeholder="username or email"
+        placeholder="Email"
         placeholderTextColor="grey"
         returnKeyType="next"
         onSubmitEDITING={() => this.passwordInput.focus()}
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
-        style={styles.input}>
+        style={styles.input}> 
+        </TextInput>
 
+        <TextInput
+        placeholder="Username"
+        placeholderTextColor="grey"
+        returnKeyType="next"
+        onSubmitEDITING={() => this.passwordInput.focus()} 
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.input}> 
+        </TextInput>
+
+        <TextInput
+        placeholder="PhoneNumber"
+        placeholderTextColor="grey"
+        returnKeyType="next"
+        onSubmitEDITING={() => this.passwordInput.focus()}
+        keyboardType="phone-pad"
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.input}> 
         </TextInput>
         
         <TextInput
@@ -30,50 +50,17 @@ class LoginForm extends Component {
         returnKeyType="send"
         secureTextEntry
         style={styles.input}
-        ref={(input) => this.passwordInput = input}>
-            
+        ref={(input) => this.passwordInput = input}> 
         </TextInput>
-
-        <Text
-         style={styles.forgotPassword}
-        >Forgot password</Text>
-
+ 
         <TouchableOpacity
         style={styles.buttonContainer}>
         <Button  
-          title="Login"
+          title="Register"
           onPress={() => this.props.navigation.navigate('Main')}
         />   
         </TouchableOpacity>
-
-        <TouchableOpacity
-        style={styles.buttonContainer}>
-        <Button  
-          title="SignUp"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-
-        <View style={styles.socialMediaButtonContainer} >
-        
-        <TouchableOpacity
-        style={styles.socialMediaButton}>
-        <Button 
-          
-          title="Facebook"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-        style={styles.socialMediaButton}>
-        <Button 
-          
-          title="Google"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-        </View>
+ 
         
         </View>
     );
@@ -90,7 +77,6 @@ const styles = {
         height: 40,
         backgroundColor: 'white',
         color: 'white', 
-        borderColor: '#d6d7da',
         borderStyle: 'solid',
     },
     buttonContainer: {
@@ -114,4 +100,4 @@ const styles = {
  
 }; 
 
-export default withNavigation(LoginForm);
+export default withNavigation(RegisterForm);
