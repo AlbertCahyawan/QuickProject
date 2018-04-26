@@ -6,7 +6,7 @@ import { DrawerNavigator } from 'react-navigation';
 import store from './Src/store';
 
 import SplashScreen from './Src/screens/SplashScreen';
-import MainScreen from './Src/screens/MainScreen';
+import HomeScreen from './Src/screens/HomeScreen';
 import LoginScreen from './Src/screens/LoginScreen';   
 import ForgotPasswordScreen from './Src/screens/ForgotPasswordScreen';
 import RegisterScreen from './Src/screens/RegisterScreen';
@@ -40,7 +40,7 @@ export default class App extends Component {
 
       const MainScreenRouter = DrawerNavigator(
       {
-        Main: { screen: MainScreen },  
+        Home: { screen: HomeScreen },  
         Login: { screen: LoginScreen },
         Register: { screen: RegisterScreen },
         ForgotPwd: { screen: ForgotPasswordScreen },
@@ -51,7 +51,7 @@ export default class App extends Component {
         test: { screen: testScreen },   
       },
       {
-        initialRouteName: 'Login', 
+        initialRouteName: 'Home', 
         contentComponent: props => <SideBar {...props} />,
         drawerPosition: 'left',
         contentOptions: {

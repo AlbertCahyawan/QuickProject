@@ -12,7 +12,7 @@ import {  Container, Root, Header, Title, Left, Icon, Right,
 
  
 
-export default class MainScreen extends Component {
+export default class HomeScreen extends Component {
    
  
   render() {  

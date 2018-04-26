@@ -41,7 +41,7 @@ class LoginForm extends Component {
         >Forgot password</Text>
 
           <Button block rounded info  
-                  onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
+                  onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
                   style={styles.buttonContainer}>
             <Text> Login </Text>
           </Button>
@@ -60,7 +60,7 @@ class LoginForm extends Component {
         <Body style={styles.socialMediaButtonContainer}> 
           <Left>
             <Button iconLeft info
-                    onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
+                    onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
                     style={styles.socialMediaButton}>
                 <Icon name='logo-facebook' />
                 <Text>Facebook</Text>
@@ -69,7 +69,7 @@ class LoginForm extends Component {
 
           <Right>
             <Button iconLeft info
-                    onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
+                    onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
                     style={styles.socialMediaButton}>
                 <Icon name="logo-googleplus" />
                 <Text>Google</Text>

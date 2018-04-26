@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Image, StatusBar } from "react-native";
 import { Container, Content, Text, List, ListItem } from "native-base";
 
-const routes = ["Home", "Main", "Login" ,"MyModal"];
+const routes = ["Home" ,"MyModal"];
 
 export default class SideBar extends Component { 
   
