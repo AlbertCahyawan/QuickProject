@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { View, Platform, Image, Text, KeyboardAvoidingView, Button } from 'react-native';
 import { connectStyle } from 'native-base';
 
-import Expo from 'expo';
-import RegisterForm from '../components/RegisterForm' 
+import Expo from 'expo'; 
 
 import logo from '../assets/icons/pure-icon.png'; 
   
@@ -41,7 +40,7 @@ export default class RegisterScreen extends Component {
          </View>
          
          <View style={styles.loginFormContainer}>
-         <RegisterForm/> 
+          
          </View>
          
        </KeyboardAvoidingView>

@@ -1,115 +1,112 @@
-import React, { Component } from 'react';
-import { View, Text, Button, TextInput, TouchableOpacity, StatusBar, } from 'react-native'; 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { Component } from 'react';  
 
-import { connectStyle } from 'native-base';
+import { connectStyle, Content, Form, Item, Input, Text, Button, Icon, Left, Body, Right} from 'native-base';
 import { withNavigation } from 'react-navigation'; 
 
 class LoginForm extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <StatusBar
-            barStyle="light-content"/>
+      
+      <Content style={styles.container}>
+        <Form>
 
-        <TextInput
-        placeholder="username or email"
-        placeholderTextColor="grey"
-        returnKeyType="next"
-        onSubmitEDITING={() => this.passwordInput.focus()}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        style={styles.input}>
+          <Item  rounded bordered
+                 style={styles.input}>
+            <Input 
+            placeholder="username or email"
+            placeholderTextColor="grey"
+            returnKeyType="next"
+            onSubmitEDITING={() => this.passwordInput.focus()}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false} 
+             />
+          </Item>
 
-        </TextInput>
-        
-        <TextInput
-        placeholder="Password"
-        placeholderTextColor="grey"
-        returnKeyType="send"
-        secureTextEntry
-        style={styles.input}
-        ref={(input) => this.passwordInput = input}>
-            
-        </TextInput>
+          <Item rounded bordered
+                style={styles.input}>
+            <Input 
+            placeholder="Password"
+            placeholder="Password"
+            placeholderTextColor="grey"
+            returnKeyType="send"
+            secureTextEntry
+            ref={(input) => this.passwordInput = input} 
+            />
+          </Item>
 
-        <Text
+          <Text
          style={styles.forgotPassword}
+         onPress={() => this.props.navigation.navigate('ForgotPwd')}
         >Forgot password</Text>
 
-        <TouchableOpacity
-        style={styles.buttonContainer}>
-        <Button  
-          title="Login"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
+          <Button block primary  
+                  onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
+                  style={styles.buttonContainer}>
+            <Text> Login </Text>
+          </Button>
 
-        <TouchableOpacity
-        style={styles.buttonContainer}>
-        <Button  
-          title="SignUp"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
+        </Form>  
+        <Button block primary  
+                  onPress={() => this.props.navigation.navigate('RegisterScreen', { Name: 'Jane' })}
+                  style={styles.buttonContainer}>
+            <Text> SignUp </Text>
+        </Button> 
 
-        <View style={styles.socialMediaButtonContainer} >
+        <Body style={styles.socialMediaButtonContainer}> 
+          <Left>
+            <Button iconLeft Primary
+                    onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
+                    style={styles.socialMediaButton}>
+                <Icon name='logo-facebook' />
+                <Text>Facebook</Text>
+            </Button>
+          </Left>
+
+          <Right>
+            <Button iconLeft light
+                    onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
+                    style={styles.socialMediaButton}>
+                <Icon name="logo-google" />
+                <Text>Google</Text>
+            </Button>
+          </Right> 
+
+        </Body> 
         
-        <TouchableOpacity
-        style={styles.socialMediaButton}>
-        <Button 
-          
-          title="Facebook"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-        
-        <TouchableOpacity
-        style={styles.socialMediaButton}>
-        <Button 
-          
-          title="Google"
-          onPress={() => this.props.navigation.navigate('Main')}
-        />   
-        </TouchableOpacity>
-        </View>
-        
-        </View>
+         
+      </Content>
+      
     );
   }
 }
+
 
 const styles = {
   container: {
         padding: 20
     }, 
     input: {
-        marginBottom: 10,
-        paddingHorizontal: 10,
-        height: 40,
-        backgroundColor: 'white',
-        color: 'white', 
-        borderColor: '#d6d7da',
-        borderStyle: 'solid',
+        marginBottom: 10, 
+        backgroundColor: 'white',  
     },
-    buttonContainer: {
-        paddingHorizontal: 10,
+    
+    buttonContainer: {  
         marginTop: 10,
         padding: 10, 
     },
     forgotPassword: {
         textAlign: 'center',  
     }, 
-    socialMediaButtonContainer: { 
-        flexDirection: 'row',
+    socialMediaButtonContainer: {  
         alignItems:'center',
-        justifyContent:'center',  
+        justifyContent:'center', 
+        flexDirection: 'row',
     }, 
 
-    socialMediaButton: { 
-       width: '50%',
-       padding: 10,    
+    socialMediaButton: {  
+      marginTop: 10,
+      padding: 10,   
     }, 
  
 }; 

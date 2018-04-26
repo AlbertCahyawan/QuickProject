@@ -4,7 +4,7 @@ import Expo from 'expo';
  
 import { STATUS_BAR_HEIGHT } from '../constants'; 
 
-import SearchFood from '../components/SearchFood' 
+import RestaurantMenu from '../components/RestaurantMenu' 
 
 import {  Container, Root, Header, Title, Left, Icon, Right,
         Button, Body, Content,Text, Card, CardItem,Item, Input, 
@@ -12,13 +12,13 @@ import {  Container, Root, Header, Title, Left, Icon, Right,
 
  
 
-export default class MainScreen extends Component {
+export default class MenuScreen extends Component {
    
  
   render() {  
     const { params } = this.props.navigation.state;
     const Name = params ? params.Name : null;
-    
+  
     return ( 
       <Container
       style={styles.container}> 
@@ -27,43 +27,18 @@ export default class MainScreen extends Component {
           <Left>
             <Button
               transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-              <Icon name="menu" />
+              onPress={() => this.props.navigation.goBack()}>
+              <Icon name="arrow-back" />
             </Button>
           </Left>
           <Body>
-            <Title>HomeScreen</Title>
+            <Title>Restaurant Name</Title>
           </Body>
           <Right />
-        </Header> 
-
-        <Content> 
-         
-        <SearchFood/>
+        </Header>  
         
-           
-        
-        <Button full rounded dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.goBack()}>
-            <Icon name="arrow-back" />
-            <Text>Go back</Text>
-        </Button>
-        
-        <Button full rounded dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate('MyModal', ) }>
-            <Text>Modal</Text>
-        </Button>
-
-        <Button full rounded dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate('test' ) }>
-            <Text>Tabs</Text>
-        </Button> 
-
-        <Text> sendfromlogin:{JSON.stringify(Name)} </Text>  
-        </Content>
+        <RestaurantMenu/>
+          
          
       </Container>
         
@@ -77,7 +52,7 @@ export default class MainScreen extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor:'lightgrey',
+    backgroundColor:'lightblue',
   },
 
   imageStyle: {

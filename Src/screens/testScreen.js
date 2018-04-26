@@ -4,21 +4,21 @@ import { Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Version can be specified in package.json
 import {  StackNavigator, TabNavigator, TabBarBottom  } from 'react-navigation';
  
-import MainScreen from './MainScreen';
-import LoginScreen from './LoginScreen';
+import MenuScreen from './MenuScreen';
+import BillScreen from './BillScreen';
 
-export default TabNavigator({
-  Login: { screen: LoginScreen },
-  Main: { screen: MainScreen },
+export default TabNavigator({ 
+  Menu: { screen: MenuScreen },
+  Cart: { screen: BillScreen },
 },
 {
   navigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Login') {
+      if (routeName === 'Menu') {
         iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-      } else if (routeName === 'Main') {
+      } else if (routeName === 'Cart') {
         iconName = `ios-options${focused ? '' : '-outline'}`;
       }
 

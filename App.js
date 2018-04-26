@@ -10,8 +10,7 @@ import MainScreen from './Src/screens/MainScreen';
 import LoginScreen from './Src/screens/LoginScreen';   
 import ForgotPasswordScreen from './Src/screens/ForgotPasswordScreen';
 import RegisterScreen from './Src/screens/RegisterScreen';
-
-
+  
 import ModalScreen from './Src/modals/ModalScreen';
 import testScreen from './Src/screens/testScreen';
 
@@ -28,7 +27,7 @@ export default class App extends Component {
       isReady: false
     };
   }
-  async componentWillMount() {
+  async componentDidMount() {
     await Expo.Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
@@ -46,12 +45,13 @@ export default class App extends Component {
         Register: { screen: RegisterScreen },
         ForgotPwd: { screen: ForgotPasswordScreen },
 
+        
         Splash: { screen: SplashScreen }, 
         MyModal: { screen: ModalScreen },
         test: { screen: testScreen },   
       },
       {
-        initialRouteName: 'Main', 
+        initialRouteName: 'Login', 
         contentComponent: props => <SideBar {...props} />,
         drawerPosition: 'left',
         contentOptions: {

@@ -22,6 +22,7 @@ export default class LoginScreen extends Component {
   componentDidMount () {
     this._loadAssetsAsync();
   }
+  
   async _loadAssetsAsync() {
     const imageAssets = cacheImages([logo]);
     await Promise.all([...imageAssets]);
@@ -39,10 +40,8 @@ export default class LoginScreen extends Component {
             style={styles.logoStyle}
           />
          </View>
-         
-         <View style={styles.loginFormContainer}>
-         <LoginForm/> 
-         </View>
+          
+         <LoginForm/>  
          
        </KeyboardAvoidingView>
     );
@@ -58,9 +57,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         height: '40%',
-    },
-    loginFormContainer:{ 
-    },
+    }, 
 
   logoStyle: {
     marginTop: 20,
