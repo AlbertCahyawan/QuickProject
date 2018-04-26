@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Platform, Image, Text, KeyboardAvoidingView, Button } from 'react-native';
 import { connectStyle } from 'native-base';
 
+import RegisterForm from '../components/RegisterForm'
+
 import Expo from 'expo'; 
 
 import logo from '../assets/icons/pure-icon.png'; 
@@ -33,15 +35,11 @@ export default class RegisterScreen extends Component {
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
  
         <View style={styles.logoContainer}>
-          <Image
-            source={logo}
-            style={styles.logoStyle}
-          />
+          <Image source={logo}
+                  style={styles.logoStyle} /> 
          </View>
-         
-         <View style={styles.loginFormContainer}>
           
-         </View>
+         <RegisterForm/>  
          
        </KeyboardAvoidingView>
     );
@@ -57,9 +55,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         height: '40%',
-    },
-    loginFormContainer:{ 
-    },
+    }, 
 
   logoStyle: {
     marginTop: 20,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform, Image, Text, KeyboardAvoidingView, Button } from 'react-native';
+import { View, Image, KeyboardAvoidingView,} from 'react-native';
 import { connectStyle } from 'native-base';
 
 import Expo from 'expo';
@@ -35,10 +35,8 @@ export default class LoginScreen extends Component {
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
  
         <View style={styles.logoContainer}>
-          <Image
-            source={logo}
-            style={styles.logoStyle}
-          />
+          <Image source={logo}
+                  style={styles.logoStyle} /> 
          </View>
           
          <LoginForm/>  

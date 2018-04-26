@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { View, Platform, Image, Text, KeyboardAvoidingView, Button } from 'react-native';
 import { connectStyle } from 'native-base';
 
-import Expo from 'expo';
-import RegisterForm from '../components/LoginForm' 
+import Expo from 'expo'; 
 
 import logo from '../assets/icons/pure-icon.png'; 
 import ForgotPasswordForm from '../components/ForgotPasswordForm';
@@ -38,11 +37,10 @@ export default class ForgotPasswordScreen extends Component {
             source={logo}
             style={styles.logoStyle}
           />
+         
          </View> 
-
-         <View style={styles.RegisterFormContainer}>
+         
          <ForgotPasswordForm/> 
-         </View>
          
        </KeyboardAvoidingView>
     );
@@ -58,9 +56,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         height: '40%',
-    },
-    RegisterFormContainer:{ 
-    },
+    }, 
 
   logoStyle: {
     marginTop: 20,

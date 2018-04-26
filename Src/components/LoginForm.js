@@ -40,22 +40,26 @@ class LoginForm extends Component {
          onPress={() => this.props.navigation.navigate('ForgotPwd')}
         >Forgot password</Text>
 
-          <Button block primary  
+          <Button block info  
                   onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
                   style={styles.buttonContainer}>
             <Text> Login </Text>
           </Button>
 
         </Form>  
-        <Button block primary  
-                  onPress={() => this.props.navigation.navigate('RegisterScreen', { Name: 'Jane' })}
+        <Button block info  
+                  onPress={() => this.props.navigation.navigate('Register', { Name: 'Jane' })}
                   style={styles.buttonContainer}>
             <Text> SignUp </Text>
         </Button> 
-
+        
+        <Body>
+          <Text>Sign in with</Text>
+        </Body>
+       
         <Body style={styles.socialMediaButtonContainer}> 
           <Left>
-            <Button iconLeft Primary
+            <Button iconLeft info
                     onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
                     style={styles.socialMediaButton}>
                 <Icon name='logo-facebook' />
@@ -64,10 +68,10 @@ class LoginForm extends Component {
           </Left>
 
           <Right>
-            <Button iconLeft light
+            <Button iconLeft info
                     onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
                     style={styles.socialMediaButton}>
-                <Icon name="logo-google" />
+                <Icon name="logo-googleplus" />
                 <Text>Google</Text>
             </Button>
           </Right> 
