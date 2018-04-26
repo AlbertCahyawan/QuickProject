@@ -1,12 +1,13 @@
 import React, { Component } from 'react';  
 
-import { connectStyle, Content, Form, Item, Input, Text, Button,} from 'native-base';
+import { connectStyle, Content, Form, Item, Input, Text, Button, H1,} from 'native-base';
 import { withNavigation } from 'react-navigation'; 
 
 class RegisterForm extends Component {
   render() {
     return (
-    <Content style={styles.container}>
+    <Content style={styles.container}> 
+        <H1>Register</H1> 
         <Form>
 
             <Item  rounded bordered
@@ -24,7 +25,18 @@ class RegisterForm extends Component {
             <Item rounded bordered
                 style={styles.input}>
                 <Input 
-                placeholder="Username"
+                placeholder="FirstName"
+                placeholderTextColor="grey"
+                returnKeyType="next"
+                onSubmitEDITING={() => this.passwordInput.focus()} 
+                autoCapitalize="none"
+                autoCorrect={false} />  
+            </Item>
+
+            <Item rounded bordered
+                style={styles.input}>
+                <Input 
+                placeholder="LastName"
                 placeholderTextColor="grey"
                 returnKeyType="next"
                 onSubmitEDITING={() => this.passwordInput.focus()} 
@@ -54,7 +66,7 @@ class RegisterForm extends Component {
                 ref={(input) => this.passwordInput = input}/> 
             </Item>
 
-            <Button block info  
+            <Button block rounded info  
                   onPress={() => this.props.navigation.navigate('Login',)}
                   style={styles.buttonContainer}>
                 <Text> Register </Text>

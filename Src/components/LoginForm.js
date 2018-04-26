@@ -40,14 +40,14 @@ class LoginForm extends Component {
          onPress={() => this.props.navigation.navigate('ForgotPwd')}
         >Forgot password</Text>
 
-          <Button block info  
+          <Button block rounded info  
                   onPress={() => this.props.navigation.navigate('Main', { Name: 'Jane' })}
                   style={styles.buttonContainer}>
             <Text> Login </Text>
           </Button>
 
         </Form>  
-        <Button block info  
+        <Button block rounded info  
                   onPress={() => this.props.navigation.navigate('Register', { Name: 'Jane' })}
                   style={styles.buttonContainer}>
             <Text> SignUp </Text>

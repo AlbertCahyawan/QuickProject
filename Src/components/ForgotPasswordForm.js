@@ -23,7 +23,7 @@ class ForgotPasswordForm extends Component {
             </Item>
  
 
-            <Button block info  
+            <Button block rounded info  
                     onPress={() => this.props.navigation.navigate('Login',)}
                     style={styles.buttonContainer}>
                     <Text> Reset Password </Text>
@@ -31,7 +31,7 @@ class ForgotPasswordForm extends Component {
              
         </Form>
 
-        <Button block info  
+        <Button block rounded info  
                 onPress={() => this.props.navigation.goBack()}
                 style={styles.buttonContainer}>
                 <Text> Back </Text>

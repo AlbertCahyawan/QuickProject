@@ -54,7 +54,7 @@ const styles = {
     logoContainer:{
         alignItems: 'center',
         justifyContent: 'center',
-        height: '40%',
+        height: '20%',
     }, 
 
   logoStyle: {
