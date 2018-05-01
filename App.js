@@ -11,6 +11,10 @@ import LoginScreen from './Src/screens/LoginScreen';
 import ForgotPasswordScreen from './Src/screens/ForgotPasswordScreen';
 import RegisterScreen from './Src/screens/RegisterScreen';
   
+import ProfileScreen from './Src/screens/ProfileScreen'
+import HistoryScreen from './Src/screens/HistoryScreen'
+import SupportScreen from './Src/screens/SupportScreen'
+
 import ModalScreen from './Src/modals/ModalScreen';
 import testScreen from './Src/screens/testScreen';
 
@@ -18,7 +22,6 @@ import SideBar from "./Src/SideBar/SideBar.js";
   
 import Expo from "expo";  
 
-  
 export default class App extends Component {
 
   constructor() {
@@ -40,18 +43,22 @@ export default class App extends Component {
 
       const MainScreenRouter = DrawerNavigator(
       {
-        Home: { screen: HomeScreen },  
+        Splash: { screen: SplashScreen }, 
+
         Login: { screen: LoginScreen },
         Register: { screen: RegisterScreen },
         ForgotPwd: { screen: ForgotPasswordScreen },
 
-        
-        Splash: { screen: SplashScreen }, 
+        Home: { screen: HomeScreen },
+        Profile: { screen: ProfileScreen },
+        History: { screen: HistoryScreen},
+        Support: { screen: SupportScreen},
+ 
         MyModal: { screen: ModalScreen },
         test: { screen: testScreen },   
       },
       {
-        initialRouteName: 'Home', 
+        initialRouteName: 'Login', 
         contentComponent: props => <SideBar {...props} />,
         drawerPosition: 'left',
         contentOptions: {

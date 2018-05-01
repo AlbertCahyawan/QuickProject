@@ -9,7 +9,7 @@ import Food from '../assets/restaurant.png';
     return Expo.Asset.fromModule(image).downloadAsync();
   });
 
-export default class ProfileScreen extends Component {
+export default class SupportScreen extends Component {
   componentDidMount () {
     this._loadAssetsAsync();
   }
