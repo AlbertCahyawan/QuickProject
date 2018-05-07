@@ -1,95 +1,160 @@
 import React, { Component } from 'react';  
 
-import { connectStyle, Content, Form, Item, Input, Text, Button, Icon, Left, Body, Right} from 'native-base';
+import { View, Image, KeyboardAvoidingView,} from 'react-native';
+import { connectStyle, Content, Form, Item, Input, Text, Button, Icon, Left, Body, Right,Toast} from 'native-base';
 import { withNavigation } from 'react-navigation'; 
+ 
+import Expo from 'expo';   
+import {connect} from 'react-redux'
 
-class LoginForm extends Component {
-  render() {
-    return (
-      
-      <Content style={styles.container}>
-        <Form>
+import { login } from '../actions/auth';
+import SocialMedia from './SocialMedia'
 
-          <Item  rounded bordered
-                 style={styles.input}>
-            <Input 
-            placeholder="username or email"
-            placeholderTextColor="grey"
-            returnKeyType="next"
-            onSubmitEDITING={() => this.passwordInput.focus()}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false} 
-             />
-          </Item>
+import logo from '../assets/icons/pure-icon.png'; 
+  
+const cacheImages = images => images.map(image => {
+  if (typeof image === 'string') return Image.prefetch(image);
+  return Expo.Asset.fromModule(image).downloadAsync();
+});
 
-          <Item rounded bordered
-                style={styles.input}>
-            <Input 
-            placeholder="Password"
-            placeholder="Password"
-            placeholderTextColor="grey"
-            returnKeyType="send"
-            secureTextEntry
-            ref={(input) => this.passwordInput = input} 
-            />
-          </Item>
+class LoginForm extends Component { 
 
-          <Text
-         style={styles.forgotPassword}
-         onPress={() => this.props.navigation.navigate('ForgotPwd')}
-        >Forgot password</Text>
-
-          <Button block rounded info  
-                  onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
-                  style={styles.buttonContainer}>
-            <Text> Login </Text>
-          </Button>
-
-        </Form>  
-        <Button block rounded info  
-                  onPress={() => this.props.navigation.navigate('Register', { Name: 'Jane' })}
-                  style={styles.buttonContainer}>
-            <Text> SignUp </Text>
-        </Button> 
+  constructor (props) {
+    super(props);
+    this.state = {
+        email: '',
+        password: '',
         
-        <Body>
-          <Text>Sign in with</Text>
-        </Body>
+        showToast: false 
+    };
+  }
+ 
+
+  userLogin (e) { 
+
+    if(this.state.email == "" ||this.state.password == ""){
+      Toast.show({
+        text: 'Please Fill Both email and password',
+        buttonText: 'Okay',
+        duration: 3000
+      }) 
+    
+    }else if(this.state.email != "carval@live.com" && this.state.password != "password"){
+      Toast.show({
+        text: 'Email or password is wrong',
+        buttonText: 'Okay',
+        duration: 3000
+      }) 
+
+    }else{
+      this.props.onLogin(this.state.email, this.state.password); 
+    }
        
-        <Body style={styles.socialMediaButtonContainer}> 
-          <Left>
-            <Button iconLeft info
-                    onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
-                    style={styles.socialMediaButton}>
-                <Icon name='logo-facebook' />
-                <Text>Facebook</Text>
-            </Button>
-          </Left>
+      e.preventDefault();
+  }
+ 
+  state = {
+    appIsReady: false
+  }
+  
+  componentDidMount () {
+    this._loadAssetsAsync();
+  }
+  
+  async _loadAssetsAsync() {
+    const imageAssets = cacheImages([logo]);
+    await Promise.all([...imageAssets]);
+    this.setState({ appIsReady: true });
+  }
 
-          <Right>
-            <Button iconLeft info
-                    onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
-                    style={styles.socialMediaButton}>
-                <Icon name="logo-googleplus" />
-                <Text>Google</Text>
-            </Button>
-          </Right> 
-
-        </Body> 
+  render() { 
+    const { handleSubmit, reset } = this.props; 
+    return ( 
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
         
-         
-      </Content>
-      
+        <View style={styles.logoContainer}>
+            <Image source={logo}
+                    style={styles.logoStyle} /> 
+        </View>
+
+        <Content style={styles.Formcontainer}>
+          <Form>
+
+            <Item  rounded bordered
+                  style={styles.input}>
+              <Input 
+              placeholder="Email"
+              placeholderTextColor="grey"
+              returnKeyType="next"
+              onSubmitEDITING={() => this.passwordInput.focus()}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false} 
+
+              value={this.state.email} 
+              onChangeText={(text) => this.setState({ email: text })} /> 
+            </Item>
+
+            <Item rounded bordered
+                  style={styles.input}>
+              <Input 
+              placeholder="Password"
+              placeholder="Password"
+              placeholderTextColor="grey"
+              returnKeyType="send"
+              secureTextEntry
+              ref={(input) => this.passwordInput = input} 
+
+              value={this.state.password} 
+              onChangeText={(text) => this.setState({ password: text })} /> 
+              
+            </Item>   
+
+            <Text
+                    style={styles.forgotPassword}
+                    onPress={() => this.props.navigation.navigate('ForgotPwd')}
+            >Forgot password</Text>
+
+            <Button block rounded info  
+                    onPress={(e) => this.userLogin(e)} 
+                    style={styles.buttonContainer}>
+              <Text> Login </Text>
+            </Button> 
+          </Form>    
+
+          <SocialMedia/>
+           
+        </Content>
+
+      </KeyboardAvoidingView>
     );
   }
 }
 
 
 const styles = {
-  container: {
+    container: {
+      flex: 1,
+      backgroundColor: 'lightblue',
+     },
+    
+    Formcontainer: {
         padding: 20
     }, 
+    
+    logoContainer:{
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '40%',
+    }, 
+
+    logoStyle: {
+      marginTop: 20,
+      marginLeft: 10,
+      width: 40,
+      height: 40
+    },
+
     input: {
         marginBottom: 10, 
         backgroundColor: 'white',  
@@ -101,18 +166,19 @@ const styles = {
     },
     forgotPassword: {
         textAlign: 'center',  
-    }, 
-    socialMediaButtonContainer: {  
-        alignItems:'center',
-        justifyContent:'center', 
-        flexDirection: 'row',
-    }, 
-
-    socialMediaButton: {  
-      marginTop: 10,
-      padding: 10,   
-    }, 
- 
+    },  
 }; 
 
-export default withNavigation(LoginForm);
+const mapStateToProps = (state, ownProps) => {
+  return {
+      isLoggedIn: state.auth.isLoggedIn
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      onLogin: (email, password) => { dispatch(login(email, password)); }  
+  }
+}
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

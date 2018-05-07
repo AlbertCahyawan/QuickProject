@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { AppRegistry, Image, StatusBar } from "react-native";
 import { Container, Content, Text, List, ListItem, Button, Thumbnail, Body, Left, Icon } from "native-base";
+import { connect } from 'react-redux';
+
+import Food from "../assets/ProfileTemplate.png"
+import FoodBackground from "../assets/BackgroundDrawer.jpg"
 
 const routes = [{name : "Home", 
                  icon : "home"
@@ -15,12 +19,7 @@ const routes = [{name : "Home",
                  icon : "cog"
                 },
                 ];
-
-import Food from "../assets/ProfileTemplate.png"
-import FoodBackground from "../assets/BackgroundDrawer.jpg"
- 
-
-export default class SideBar extends Component { 
+class SideBar extends Component { 
     
   render() {
     return (
@@ -51,7 +50,7 @@ export default class SideBar extends Component {
           </Text>
           
           <Text style={{ color:"white" }}>
-          Email@gmail.com
+          {`${this.props.email}`} 
           </Text>
         
         </Left>
@@ -74,3 +73,12 @@ export default class SideBar extends Component {
     );
   }
 }
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+      email : state.auth.email, 
+  };
+}
+
+ export default connect(mapStateToProps)(SideBar);

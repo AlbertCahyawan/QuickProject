@@ -1,66 +1,29 @@
 import React, { Component } from 'react';
 
-import { View, Image, Text } from 'react-native';
-import Expo from 'expo';
-
-import logo from '../assets/icons/pure-icon.png';
-
-const cacheImages = images => images.map(image => {
-    if (typeof image === 'string') return Image.prefetch(image);
-    return Expo.Asset.fromModule(image).downloadAsync();
-  });
-  
-export default class SplashScreen extends Component {
-    static navigationOptions = () => ({
-        header: null
-      });
-    
-      state = {
-        appIsReady: false
-      }
-     
-      componentWillMount() {
-        this._loadAssetsAsync();
-      }
-      async _loadAssetsAsync() {
-        const imageAssets = cacheImages([logo]);
-        await Promise.all([...imageAssets]);
-        this.setState({ appIsReady: true });
-      }
-
-  render() {
-    return (
-      <View behavior="padding" style={styles.container}>
+import { connect } from 'react-redux';
  
-        <View style={styles.logoContainer}>
-          <Image
-            source={logo}
-            style={styles.logoStyle}
-          />
-         </View>
-          
-       </View>
-    );
+import Splash from '../components/Splash'
+
+class SplashScreen extends Component {           
+  render() { 
+
+    if (this.props.isLoggedIn) {
+        return (
+          this.props.navigation.navigate('Home')
+        );
+    } else {
+        return (
+          this.props.navigation.navigate('Login')
+        );
+    }
+       
   }
 }
 
-const styles = {
-    container: {
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center', 
-          backgroundColor: '#2c3e50',
-      },
-      logoContainer:{
-          alignItems: 'center',
-          justifyContent: 'center', 
-      },  
-    logoStyle: {
-      marginTop: 20,
-      marginLeft: 10,
-      width: 40,
-      height: 40
-    },
-  
-  
+const mapStateToProps = (state, ownProps) => {
+  return {
+      isLoggedIn: state.auth.isLoggedIn
   };
+}
+
+ export default connect(mapStateToProps)(SplashScreen);

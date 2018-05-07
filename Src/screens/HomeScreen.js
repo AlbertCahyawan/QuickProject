@@ -5,11 +5,11 @@ import Expo from 'expo';
 import { STATUS_BAR_HEIGHT } from '../constants'; 
 
 import SearchFood from '../components/SearchFood' 
+import Counter from '../components/Testcounter' 
 
 import {  Container, Root, Header, Title, Left, Icon, Right,
         Button, Body, Content,Text, Card, CardItem,Item, Input, 
         List, ListItem, Thumbnail } from "native-base";
-
  
 
 export default class HomeScreen extends Component {
@@ -41,6 +41,7 @@ export default class HomeScreen extends Component {
          
         <SearchFood/>
         
+        <Counter/>
            
         
         <Button full rounded dark
@@ -71,9 +72,7 @@ export default class HomeScreen extends Component {
       
     );
   }
-}
-
-
+}  
 const styles = {
   container: {
     flex: 1,
@@ -96,6 +95,4 @@ const styles = {
   },
   
 
-};
-
- 
+}; 

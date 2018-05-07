@@ -1,13 +1,13 @@
-import { combineReducers } from 'redux';
 
-import AppNavigation from '../Navigation/AppNavigation' 
-  
-const navReducer = (state, action) => {
-  const newState = AppNavigation.router.getStateForAction(action, state)
-  return newState || state
-}
-
-export default combineReducers({ 
-  nav: navReducer,
+import {combineReducers} from 'redux'; 
+import countReducer from './countReducer.js'; 
+import auth from './auth.js'; 
+ 
+const Reducer = combineReducers({ 
+  count: countReducer,
+  auth, 
 });
 
+export default Reducer;
+
+  

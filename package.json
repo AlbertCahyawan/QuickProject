@@ -25,6 +25,7 @@
     "@expo/vector-icons": "^6.3.1",
     "expo": "^26.0.0",
     "native-base": "^2.4.2",
+    "prop-types": "^15.6.1",
     "react": "16.3.0-alpha.1",
     "react-native": "0.54.1",
     "react-native-animatable": "^1.2.4",
@@ -35,11 +36,13 @@
     "react-native-linear-gradient": "^2.4.0",
     "react-native-router-flux": "^4.0.0-beta.28",
     "react-native-search-bar": "^3.4.1",
+    "react-native-simple-toast": "0.0.8",
     "react-native-splash-screen": "^3.0.6",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^1.5.11",
     "react-navigation-redux-helpers": "^1.0.5",
     "react-redux": "^5.0.7",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-form": "^7.3.0"
   }
 }

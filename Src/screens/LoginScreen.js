@@ -1,69 +1,36 @@
-import React, { Component } from 'react';
-import { View, Image, KeyboardAvoidingView,} from 'react-native';
-import { connectStyle } from 'native-base';
+import React, { Component } from 'react'; 
 
-import Expo from 'expo';
 import LoginForm from '../components/LoginForm' 
 
-import logo from '../assets/icons/pure-icon.png'; 
-  
-const cacheImages = images => images.map(image => {
-  if (typeof image === 'string') return Image.prefetch(image);
-  return Expo.Asset.fromModule(image).downloadAsync();
-});
+import { connect } from 'react-redux';
+import { View,Text } from 'react-native';
+import { connectStyle} from 'native-base';
 
-export default class LoginScreen extends Component {
-   
 
-  state = {
-    appIsReady: false
-  }
-  
-  componentDidMount () {
-    this._loadAssetsAsync();
-  }
-  
-  async _loadAssetsAsync() {
-    const imageAssets = cacheImages([logo]);
-    await Promise.all([...imageAssets]);
-    this.setState({ appIsReady: true });
-  }
-
+class LoginScreen extends Component { 
+    
   render() { 
-
-    return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
- 
-        <View style={styles.logoContainer}>
-          <Image source={logo}
-                  style={styles.logoStyle} /> 
-         </View>
+    if (this.props.isLoggedIn) {
+      return (
+        this.props.navigation.navigate('Home') 
+      );
+    }else {
+      return ( 
+        
+        <LoginForm/>   
           
-         <LoginForm/>  
-         
-       </KeyboardAvoidingView>
-    );
+      );
+    } 
   }
+} 
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+      email : state.auth.email,
+      isLoggedIn: state.auth.isLoggedIn
+  };
 }
 
-const styles = {
-  container: {
-        flex: 1,
-        backgroundColor: 'lightblue',
-    },
-    logoContainer:{
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '40%',
-    }, 
+ export default connect(mapStateToProps)(LoginScreen);
 
-  logoStyle: {
-    marginTop: 20,
-    marginLeft: 10,
-    width: 40,
-    height: 40
-  },
-
-
-};
  
