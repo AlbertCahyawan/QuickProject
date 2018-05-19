@@ -11,6 +11,18 @@ const cacheImages = images => images.map(image => {
     return Expo.Asset.fromModule(image).downloadAsync();
   });
 
+let routes = [{ 
+    fname : "Chicken Teriyaki", 
+    Fqty : 1,
+    fprice : 20000, 
+  },
+  { 
+    fname : "Rice Bowl", 
+    Fqty : 1,
+    fprice : 15000, 
+  },  
+]; 
+
 class RestaurantMenu extends Component {
 
     state = {
@@ -34,7 +46,7 @@ class RestaurantMenu extends Component {
             <ListItem itemDivider thumbnail>
               
               <Text>Your Order</Text>
-            </ListItem>
+            </ListItem>  
 
             <ListItem>
               <Body>
@@ -51,44 +63,30 @@ class RestaurantMenu extends Component {
               
             </ListItem> 
             
-            <ListItem noBorder>
-               
-              <Body>
-                <Text>Chicken Teriyaki</Text>
-              </Body>
-                
-              <Body>
-                <Text>x1</Text>
-              </Body>
-              
-              <Body>
-                <Text>20.000</Text>  
-              </Body>
+            <List contentContainerStyle={styles.list}
+            dataArray={routes}
+            renderRow={data => { 
+                return ( 
+                  <ListItem noBorder> 
+                    <Body>
+                      <Text>{data.fname}</Text>
+                    </Body>
+                      
+                    <Body>
+                      <Text>{data.Fqty}</Text>
+                    </Body>
+                    
+                    <Body>
+                      <Text>{data.fprice}</Text>  
+                    </Body>
 
-              <Icon  name="trash" 
-                Button onPress={() => alert('Remove')}/>
-                 
-            </ListItem>
-
-            <ListItem noBorder>
-              
-
-              <Body>
-                <Text>Rice Bowl</Text>
-              </Body>
-                
-              <Body>
-                <Text>x1</Text>
-              </Body>
-              
-              <Body>
-                <Text>15.000</Text>  
-              </Body>
-
-              <Icon  name="trash" 
-                Button onPress={() => alert('Remove')}/>
-                 
-            </ListItem>
+                    <Icon  name="trash" 
+                      Button onPress={() => alert('Remove')}/>
+                    
+                </ListItem> 
+                );
+            }}        
+          />  
 
             <ListItem itemDivider>
                 

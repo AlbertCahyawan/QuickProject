@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Content, Thumbnail, Text, Item, Body, Card, CardItem} from 'native-base'; 
+import { connectStyle,Content, Thumbnail, Text, Item, Body, Card, CardItem, List, ListItem, Left, Button,} from 'native-base'; 
 import { Col, Row, Grid } from 'react-native-easy-grid';
+import {View, Alert} from 'react-native';
 
-import { connectStyle } from 'native-base';
 import { withNavigation } from 'react-navigation'; 
 
 import Food from '../assets/restaurant.png';
@@ -11,7 +11,11 @@ const cacheImages = images => images.map(image => {
     if (typeof image === 'string') return Image.prefetch(image);
     return Expo.Asset.fromModule(image).downloadAsync();
   });
-
+  
+let routes = [{ 
+    fdetail : "Restaurant Detail",  
+  }, 
+];
 class RestaurantMenu extends Component {
 
     state = {
@@ -28,58 +32,59 @@ class RestaurantMenu extends Component {
         this.setState({ appIsReady: true });
       }
 
+      AddItemsToArray=()=>{ 
+        //Adding Items To Array.
+        routes.push({  
+            fdetail : "Restaurant Detail",  
+         });  
+         Alert.alert(routes.toString()); 
+    }
+
   render() {
-    return ( 
-
-      <Content style={styles.foodlistContainer}>
-        <Grid>
-          <Row  style={{ backgroundColor: '#635DB7' }}>
-            
-            <Col style={styles.foodContainer}
-                  button onPress={() => alert('Add') }>
-              <Thumbnail square source={Food} 
-                          />
-              <Text note>Food Detail</Text>
-            </Col> 
-
-            <Col style={styles.foodContainer}
-                  button onPress={() => alert('Add') }>
-              <Thumbnail square source={Food} 
-                          />
-              <Text note>Food Detail</Text>
-            </Col> 
-
-            <Col style={styles.foodContainer}
-                  button onPress={() => alert('Add') }>
-              <Thumbnail square source={Food} 
-                          />
-              <Text note>Food Detail</Text>
-            </Col> 
-
-            <Col style={styles.foodContainer}
-                  button onPress={() => alert('Add') }>
-              <Thumbnail square source={Food} 
-                          />
-              <Text note>Food Detail</Text>
-            </Col> 
-
-          </Row> 
-        </Grid>
-      </Content>
-        
+    return (  
+      <Content style={styles.foodlistContainer}> 
+        <List contentContainerStyle={styles.list}
+            dataArray={routes}
+            renderRow={data => { 
+                return ( 
+                  <View style={styles.row}> 
+                      <Thumbnail square  source={Food} />  
+                      <Text note>{data.fdetail}</Text>    
+                      <Button block success
+                      onPress={this.AddItemsToArray}  >
+                      <Text>ADD</Text>
+                      </Button> 
+                  </View>  
+                );
+            }}        
+          /> 
+      </Content> 
     );
   }
 }
 
-const styles = {
-    foodlistContainer: { 
-        backgroundColor:'lightgrey',
-      }, 
+const styles = {  
+
+    list: {
+      justifyContent: 'flex-start',
+      flexDirection: 'row',
+      flexWrap: 'wrap', 
+      backgroundColor: '#CCC', 
+     }, 
      
+     row: {
+      marginTop: 2,
+      justifyContent: 'center', 
+      alignItems: 'center',
+      padding: 5,
+      width: 120,
+      height: 120,
+      borderWidth: 1,
+      borderColor: '#CCC',
+      backgroundColor: '#F6F6F6', 
+    },
+      
     
-    foodContainer:{  
-        alignSelf: "center" 
-      }
  
 }; 
 

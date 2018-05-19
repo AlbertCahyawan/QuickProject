@@ -2,7 +2,7 @@ import { NavigationActions } from 'react-navigation';
 
 const defaultState = {
     isLoggedIn: false,
-    email: '',
+    email: 'test@gmail.com',
     password: ''
 }; 
 export default function reducer(state = defaultState, action) {

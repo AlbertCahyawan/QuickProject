@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Alert } from "react-native";
 import { Container, Header , Title, Left, Body, Content, Right, Icon, Button, Text, Thumbnail, H1, H3,} from "native-base"; 
+import {connect} from 'react-redux';
 
 import Food from '../assets/restaurant.png';
 
@@ -9,7 +10,7 @@ import Food from '../assets/restaurant.png';
     return Expo.Asset.fromModule(image).downloadAsync();
   });
 
-export default class ProfileScreen extends Component {
+class ProfileScreen extends Component {
   componentDidMount () {
     this._loadAssetsAsync();
   }
@@ -44,7 +45,7 @@ export default class ProfileScreen extends Component {
  
             <Left>
               <Text>Email</Text>
-              <H3>USER@HOTMAIL.COM</H3> 
+              <H3>{`${this.props.email}`}</H3> 
 
               <Text>Phone</Text>
               <H3>084467896437</H3>
@@ -70,3 +71,13 @@ const styles = {
   }
 
 }; 
+
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+      email : state.auth.email,
+      isLoggedIn: state.auth.isLoggedIn
+  };
+}
+
+export default connect(mapStateToProps)(ProfileScreen);
