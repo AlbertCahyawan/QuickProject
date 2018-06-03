@@ -5,6 +5,7 @@ import Expo from 'expo';
 import { STATUS_BAR_HEIGHT } from '../constants'; 
 
 import SearchFood from '../components/SearchFood' 
+import SearchFoodList from '../components/SearchFoodList'
 import Counter from '../components/Testcounter' 
 
 import {  Container, Root, Header, Title, Left, Icon, Right,
@@ -22,7 +23,6 @@ export default class HomeScreen extends Component {
     return ( 
       <Container
       style={styles.container}> 
-
         <Header>
           <Left>
             <Button
@@ -36,47 +36,22 @@ export default class HomeScreen extends Component {
           </Body>
           <Right />
         </Header> 
-
-        <Content> 
-         
-        <SearchFood/>
         
-        <Counter/>
-           
-        
-        <Button full rounded dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.goBack()}>
-            <Icon name="arrow-back" />
-            <Text>Go back</Text>
-        </Button>
-        
-        <Button full rounded dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate('MyModal', ) }>
-            <Text>Modal</Text>
-        </Button>
+        <Content>
+          <SearchFood/>     
+          <SearchFoodList/>
+        </Content> 
 
-        <Button full rounded dark
-            style={{ marginTop: 10 }}
-            onPress={() => this.props.navigation.navigate('test' ) }>
-            <Text>Tabs</Text>
-        </Button> 
-
-        <Text> sendfromlogin:{JSON.stringify(Name)} </Text>  
-        </Content>
-         
       </Container>
         
-        
-      
     );
   }
 }  
+
 const styles = {
-  container: {
-    flex: 1,
-    backgroundColor:'lightgrey',
+  container: { 
+    height:'100%',
+    backgroundColor:'white',
   },
 
   imageStyle: {

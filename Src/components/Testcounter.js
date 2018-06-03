@@ -9,15 +9,13 @@ class Counter extends Component{
     return( 
       
         <Content padder> 
-
-
-              <Text>
-                name:  
-                {this.props.test}   
-              </Text> 
           <Button dark bordered onPress= {() => this.props.increment()}>
             <Text>Increment</Text>
           </Button> 
+              <Text>
+                name:  
+                {this.props.test}   
+              </Text>  
           <Button dark bordered onPress= {() => this.props.decrement()}>
             <Text>Decrement</Text>
           </Button>

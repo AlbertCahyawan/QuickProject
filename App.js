@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import store from './Src/store'; 
 
-import { Root } from "native-base";
-import AppNavigation from './Src/Navigation/AppNavigation';
+import { Root } from "native-base"; 
   
 import Expo from "expo";  
+import AppNavigation from './Src/Navigation/AppNavigation';
+import {  ActivityIndicator  } from 'react-native';
 
 export default class App extends Component {
 
@@ -23,11 +24,13 @@ export default class App extends Component {
     });
     this.setState({ isReady: true });
   }
-
+  
   render() {
-
+    
     if (!this.state.isReady) {
-      return <Expo.AppLoading />;
+    return (
+    <ActivityIndicator style={{flex:1}} />
+  );
     } 
     return ( 
       <Provider store={store}>

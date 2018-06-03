@@ -18,15 +18,24 @@ import SupportScreen from '../screens/SupportScreen'
 import ModalScreen from '../modals/ModalScreen';
 import testScreen from '../screens/testScreen';
 
-import SideBar from "../SideBar/SideBar.js";  
+import SideBar from "../SideBar/SideBar.js";   
+
+const LoginNav = DrawerNavigator(
+  {
+    Splash: { screen: SplashScreen }, 
+
+    Login: { screen: LoginScreen },
+    Register: { screen: RegisterScreen },
+    ForgotPwd: { screen: ForgotPasswordScreen }, 
+  },
+  { 
+    initialRouteName: 'Login', 
+  }
+);
 
 const MainNav = DrawerNavigator(
     {
-      Splash: { screen: SplashScreen }, 
-
-      Login: { screen: LoginScreen },
-      Register: { screen: RegisterScreen },
-      ForgotPwd: { screen: ForgotPasswordScreen },
+      Splash: { screen: SplashScreen },  
 
       Home: { screen: HomeScreen },
       Profile: { screen: ProfileScreen },
@@ -46,4 +55,14 @@ const MainNav = DrawerNavigator(
     }
 );   
 
-export default (MainNav)
+const MainApp = DrawerNavigator(
+  {
+    Login: { screen: LoginNav }, 
+    Home: { screen: MainNav }, 
+  },
+  { 
+    initialRouteName: 'Home',  
+  }
+);
+
+export default (MainApp)

@@ -33,11 +33,14 @@ class RestaurantMenu extends Component {
       }
 
       AddItemsToArray=()=>{ 
+        
         //Adding Items To Array.
         routes.push({  
             fdetail : "Restaurant Detail",  
          });  
          Alert.alert(routes.toString()); 
+         this.setState({refreshing : true});
+        this.setState({refreshing : false});   
     }
 
   render() {
@@ -45,6 +48,8 @@ class RestaurantMenu extends Component {
       <Content style={styles.foodlistContainer}> 
         <List contentContainerStyle={styles.list}
             dataArray={routes}
+            refreshing ={this.state.refreshing}
+            onRefresh ={this.onRefresh}
             renderRow={data => { 
                 return ( 
                   <View style={styles.row}> 
