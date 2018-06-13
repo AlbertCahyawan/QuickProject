@@ -37,24 +37,7 @@ export default class SupportScreen extends Component {
 
         <Content padder>
           <Body>
-            <Thumbnail round source={Food}
-                              style={styles.profileImage} />
-            <H1>User Name</H1>
-          </Body>
- 
-            <Left>
-              <Text>Email</Text>
-              <H3>USER@HOTMAIL.COM</H3> 
-
-              <Text>Phone</Text>
-              <H3>084467896437</H3>
-            </Left> 
-            
-            <Body>
-              <Button rounded 
-                    onPress={() => this.props.navigation.navigate('Login', ) }>
-                <Text>Sign Out</Text> 
-              </Button>
+            <Text>support</Text>
             </Body>
           
         </Content>

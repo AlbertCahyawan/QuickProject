@@ -61,7 +61,7 @@ const MainApp = DrawerNavigator(
     Home: { screen: MainNav }, 
   },
   { 
-    initialRouteName: 'Home',  
+    initialRouteName: 'Login',  
   }
 );
 

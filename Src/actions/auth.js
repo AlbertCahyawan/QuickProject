@@ -1,11 +1,13 @@
 import { NavigationActions } from 'react-navigation';
 
   
-export const login = (email, password) => {
+export const login = (email,firstname,lastname,phonenumber) => {
     return {
         type: 'LOGIN',
-        email: email,
-        password: password
+        email:email,
+        firstname:firstname,
+        lastname:lastname,
+        phonenumber:phonenumber, 
     };
 };
  
@@ -14,8 +16,4 @@ export const logout = () => {
         type: 'LOGOUT'
     };
 };
- 
-export const signup = (email, password) => {
-    return (dispatch) => {
-    };
-}; 
+    

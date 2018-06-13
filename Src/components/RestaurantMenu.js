@@ -3,18 +3,23 @@ import { connectStyle,Content, Thumbnail, Text, Item, Body, Card, CardItem, List
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import {View, Alert} from 'react-native';
 
-import { withNavigation } from 'react-navigation'; 
-
-import Food from '../assets/restaurant.png';
+import { connect } from 'react-redux'; 
+  
+import Food from '../assets/images.jpg';
  
+import {Addingfood} from '../actions/index';
+
 const cacheImages = images => images.map(image => {
     if (typeof image === 'string') return Image.prefetch(image);
     return Expo.Asset.fromModule(image).downloadAsync();
   });
   
 let routes = [{ 
-    fdetail : "Restaurant Detail",  
+    fdetail : "Fried Chicken",  
   }, 
+  { 
+    fdetail : "French Fries",  
+  },
 ];
 class RestaurantMenu extends Component {
 
@@ -38,9 +43,13 @@ class RestaurantMenu extends Component {
         routes.push({  
             fdetail : "Restaurant Detail",  
          });  
-         Alert.alert(routes.toString()); 
+         Alert.alert(this.props.bill.toString()); 
          this.setState({refreshing : true});
         this.setState({refreshing : false});   
+    }
+
+    AddOrder(){  
+        this.props.Add("FriedChicken","1","15000")  
     }
 
   render() {
@@ -56,13 +65,13 @@ class RestaurantMenu extends Component {
                       <Thumbnail square  source={Food} />  
                       <Text note>{data.fdetail}</Text>    
                       <Button block success
-                      onPress={this.AddItemsToArray}  >
+                      onPress={() => this.AddOrder()}  >
                       <Text>ADD</Text>
                       </Button> 
                   </View>  
                 );
             }}        
-          /> 
+          />
       </Content> 
     );
   }
@@ -89,9 +98,24 @@ const styles = {
       backgroundColor: '#F6F6F6', 
     },
       
-    
- 
 }; 
 
-export default withNavigation(RestaurantMenu);
- 
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    bill : state.addFoodReducer.bill
+  };
+}  
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    Add: (fname,Fqty,fprice) => { dispatch(Addingfood(fname,Fqty,fprice)); }  
+  }
+}   
+
+export default connect(mapStateToProps,mapDispatchToProps)(RestaurantMenu); 
+
+   
+
+
+

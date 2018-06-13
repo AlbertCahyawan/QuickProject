@@ -4,6 +4,8 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
  
 import { withNavigation } from 'react-navigation'; 
 
+import { connect } from 'react-redux'; 
+
 import Food from '../assets/restaurant.png';
  
 const cacheImages = images => images.map(image => {
@@ -11,19 +13,9 @@ const cacheImages = images => images.map(image => {
     return Expo.Asset.fromModule(image).downloadAsync();
   });
 
-let routes = [{ 
-    fname : "Chicken Teriyaki", 
-    Fqty : 1,
-    fprice : 20000, 
-  },
-  { 
-    fname : "Rice Bowl", 
-    Fqty : 1,
-    fprice : 15000, 
-  },  
-]; 
+let routes = [ ]; 
 
-class RestaurantMenu extends Component {
+class ShoppingCart extends Component {
 
     state = {
         appIsReady: false
@@ -64,7 +56,7 @@ class RestaurantMenu extends Component {
             </ListItem> 
             
             <List contentContainerStyle={styles.list}
-            dataArray={routes}
+            dataArray={this.props.bill} 
             renderRow={data => { 
                 return ( 
                   <ListItem noBorder> 
@@ -96,33 +88,7 @@ class RestaurantMenu extends Component {
               <Body>
                 <Text>Detailed Bill</Text>
               </Body> 
-            </ListItem>
-
-            <ListItem noBorder>
-              <Body>
-                <Text>GrandTotal</Text>
-              </Body>
-                
-              <Body> 
-              </Body>
-              
-              <Body>
-                <Text>15.000</Text>  
-              </Body> 
-            </ListItem>
-
-            <ListItem noBorder>
-              <Body>
-                <Text>Item Total(5)</Text>
-              </Body>
-                
-              <Body> 
-              </Body>
-              
-              <Body>
-                <Text>15.000</Text>  
-              </Body> 
-            </ListItem>
+            </ListItem> 
 
             <ListItem noBorder>
               <Body>
@@ -153,7 +119,8 @@ class RestaurantMenu extends Component {
           </List>
           
           <Button block primary
-                  style={styles.orderButton}>
+                  style={styles.orderButton}
+                  Button onPress={() => alert('food ordered')}>
             <Text>Order</Text>
           </Button> 
         </Content>  
@@ -176,5 +143,11 @@ const styles = {
  
 }; 
 
-export default withNavigation(RestaurantMenu);
- 
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    bill : state.addFoodReducer.bill
+  };
+}  
+
+export default connect(mapStateToProps)(ShoppingCart); 

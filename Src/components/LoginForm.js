@@ -1,129 +1,147 @@
-import React, { Component } from 'react';  
+import React, { Component } from 'react';
 
-import { View, Image, KeyboardAvoidingView,} from 'react-native';
-import { connectStyle, Content, Form, Item, Input, Text, Button, Icon, Left, Body, Right,Toast} from 'native-base';
-import { withNavigation } from 'react-navigation'; 
- 
-import Expo from 'expo';   
-import {connect} from 'react-redux'
+import { View, Image, KeyboardAvoidingView, } from 'react-native';
+import { connectStyle, Content, Form, Item, Input, Text, Button, Icon, Left, Body, Right, Toast } from 'native-base';
+
+import Expo from 'expo';
+import { connect } from 'react-redux'
 
 import { login } from '../actions/auth';
 import SocialMedia from './SocialMedia'
 
-import logo from '../assets/icons/pure-icon.png'; 
-  
+import logo from '../assets/icons/pure-icon.png';
+
 const cacheImages = images => images.map(image => {
   if (typeof image === 'string') return Image.prefetch(image);
   return Expo.Asset.fromModule(image).downloadAsync();
 });
 
-class LoginForm extends Component { 
+class LoginForm extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
-        email: '',
-        password: '',
-        
-        showToast: false 
+      email: '',
+      password: '',
+
+      showToast: false
     };
   }
- 
 
-  userLogin (e) { 
+  SendLoginForm() {
+    fetch('http://188.166.210.104:3000/Auth', {
+      method: 'post',
+      headers: ({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }),
+      body: JSON.stringify({
+        email: this.state.email,
+        password: this.state.password,
+      })
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson == "FailedAuthenthication") {
+          alert("Wrong Email Or Password")
+        } else {
+          this.props.onLogin(responseJson[0].email, responseJson[0].firstname, responseJson[0].lastname, responseJson[0].phonenumber);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
-    if(this.state.email == "" ||this.state.password == ""){
+  userLogin(e) {
+
+    if (this.state.email == "" || this.state.password == "") {
       Toast.show({
         text: 'Please Fill Both email and password',
         buttonText: 'Okay',
         duration: 3000
-      }) 
-    
-    }else if(this.state.email != "carval@live.com" && this.state.password != "password"){
-      Toast.show({
-        text: 'Email or password is wrong',
-        buttonText: 'Okay',
-        duration: 3000
-      }) 
+      })
 
-    }else{
-      this.props.onLogin(this.state.email, this.state.password); 
     }
-       
-      e.preventDefault();
+    else {
+      this.SendLoginForm()
+    }
+
+    e.preventDefault();
   }
- 
+
   state = {
     appIsReady: false
   }
-  
-  componentDidMount () {
+
+  componentDidMount() {
     this._loadAssetsAsync();
   }
-  
+
   async _loadAssetsAsync() {
     const imageAssets = cacheImages([logo]);
     await Promise.all([...imageAssets]);
     this.setState({ appIsReady: true });
   }
 
-  render() { 
-    const { handleSubmit, reset } = this.props; 
-    return ( 
+
+
+  render() {
+    return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        
+
         <View style={styles.logoContainer}>
-            <Image source={logo}
-                    style={styles.logoStyle} /> 
+          <Image source={logo}
+            style={styles.logoStyle} />
         </View>
 
         <Content style={styles.Formcontainer}>
           <Form>
 
-            <Item  rounded bordered
-                  style={styles.input}>
-              <Input 
-              placeholder="Email"
-              placeholderTextColor="grey"
-              returnKeyType="next"
-              onSubmitEDITING={() => this.passwordInput.focus()}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false} 
+            <Item rounded bordered
+              style={styles.input}>
+              <Input
+                placeholder="Email"
+                placeholderTextColor="grey"
+                returnKeyType="next"
+                onSubmitEDITING={() => this.passwordInput.focus()}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
 
-              value={this.state.email} 
-              onChangeText={(text) => this.setState({ email: text })} /> 
+                value={this.state.email}
+                onChangeText={(text) => this.setState({ email: text })} />
             </Item>
 
             <Item rounded bordered
-                  style={styles.input}>
-              <Input 
-              placeholder="Password"
-              placeholder="Password"
-              placeholderTextColor="grey"
-              returnKeyType="send"
-              secureTextEntry
-              ref={(input) => this.passwordInput = input} 
+              style={styles.input}>
+              <Input
+                placeholder="Password"
+                placeholder="Password"
+                placeholderTextColor="grey"
+                returnKeyType="send"
+                secureTextEntry
+                ref={(input) => this.passwordInput = input}
 
-              value={this.state.password} 
-              onChangeText={(text) => this.setState({ password: text })} /> 
-              
-            </Item>   
+                value={this.state.password}
+                onChangeText={(text) => this.setState({ password: text })} />
+
+            </Item>
 
             <Text
-                    style={styles.forgotPassword}
-                    onPress={() => this.props.navigation.navigate('ForgotPwd')}
+              style={styles.forgotPassword}
+
             >Forgot password</Text>
 
-            <Button block rounded info  
-                    onPress={(e) => this.userLogin(e)} 
-                    style={styles.buttonContainer}>
+            <Button block rounded info
+              onPress={(e) => this.userLogin(e)}
+              style={styles.buttonContainer}>
               <Text> Login </Text>
-            </Button> 
-          </Form>    
+            </Button>
+          </Form>
 
-          <SocialMedia/>
-           
+          <SocialMedia />
+
         </Content>
 
       </KeyboardAvoidingView>
@@ -133,52 +151,55 @@ class LoginForm extends Component {
 
 
 const styles = {
-    container: {
-      flex: 1,
-      backgroundColor: 'lightblue',
-     },
-    
-    Formcontainer: {
-        padding: 20
-    }, 
-    
-    logoContainer:{
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '40%',
-    }, 
+  container: {
+    flex: 1,
+    backgroundColor: 'lightblue',
+  },
 
-    logoStyle: {
-      marginTop: 20,
-      marginLeft: 10,
-      width: 40,
-      height: 40
-    },
+  Formcontainer: {
+    padding: 20
+  },
 
-    input: {
-        marginBottom: 10, 
-        backgroundColor: 'white',  
-    },
-    
-    buttonContainer: {  
-        marginTop: 10,
-        padding: 10, 
-    },
-    forgotPassword: {
-        textAlign: 'center',  
-    },  
-}; 
+  logoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '40%',
+  },
+
+  logoStyle: {
+    marginTop: 20,
+    marginLeft: 10,
+    width: 40,
+    height: 40
+  },
+
+  input: {
+    marginBottom: 10,
+    backgroundColor: 'white',
+  },
+
+  buttonContainer: {
+    marginTop: 10,
+    padding: 10,
+  },
+  forgotPassword: {
+    textAlign: 'center',
+  },
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {
-      isLoggedIn: state.auth.isLoggedIn
+    email: state.auth.email,
+    firstname: state.auth.firstname,
+    lastname: state.auth.lastname,
+    phonenumber: state.auth.phonenumber, 
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      onLogin: (email, password) => { dispatch(login(email, password)); }  
+    onLogin: (email, firstname, lastname, phonenumber) => { dispatch(login(email, firstname, lastname, phonenumber)); }
   }
 }
- 
+
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

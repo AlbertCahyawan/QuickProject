@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import { connectStyle, Text, Button, List, ListItem, Left, Body, Thumbnail, Content, Right, Container, Spinner, Input,Form, Item,Label } from 'native-base'; 
- 
+import { connectStyle, Text, Button, List, ListItem, Left, Body, Thumbnail, Content, Right, Container, Spinner, Input, Form, Item, Label } from 'native-base';
+
+import { connect } from 'react-redux';
+
+import DatePicker from 'react-native-datepicker';
+
 import {
     Dialog,
     ProgressDialog,
@@ -9,21 +13,26 @@ import {
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import{ FlatList} from 'react-native';
-import { withNavigation } from 'react-navigation';  
+import { FlatList } from 'react-native';
+import { withNavigation } from 'react-navigation';
+
 import Food from '../assets/restaurant.png';
+
+import Orderbutton from './Orderbutton';
+
 
 const cacheImages = images => images.map(image => {
     if (typeof image === 'string') return Image.prefetch(image);
     return Expo.Asset.fromModule(image).downloadAsync();
-  });
-  //use whatwg-fetch-timeout
-class SearchFoodList extends Component { 
-    constructor(props){
-        super(props); 
-        this.state = {   
-            refreshing : false,
-            dataSource : [],
+});
+
+class SearchFoodList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            refreshing: false,
+            dataSource: [],
+            guest: '1',
         };
     }
 
@@ -51,156 +60,192 @@ class SearchFoodList extends Component {
         setTimeout(() => alert("No touched!"), 100);
     }
 
- 
-    fetchdata(){
-          fetch('http://188.166.210.104:3000/test',{timeout: 1000}, {
+    fetchdata() {
+        var URL = 'http://188.166.210.104:3000/Restaurant/'+ this.props.searchresult 
+        fetch( URL, { timeout: 1000 }, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            }})
-          .then((response) => response.json())
-          .then((responseJson) => { 
-            this.setState({
-              isLoading: false,
-              dataSource: responseJson, 
-            }, function(){
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isLoading: false,
+                    dataSource: responseJson,
+                }, function () {
+                });
+
+            })
+            .catch((error) => {
+                console.error(error);
             });
-    
-          })
-          .catch((error) =>{
-            alert("eRROR");
-            console.error(error);
-          });
-           
-      } 
-    
-      componentDidMount () {
-        this._loadAssetsAsync();
-        this.fetchdata(); 
     }
-    
-      async _loadAssetsAsync() {
+
+    componentDidMount() {
+        this._loadAssetsAsync(); 
+    }
+
+    async _loadAssetsAsync() {
         const imageAssets = cacheImages([Food]);
         await Promise.all([...imageAssets]);
         this.setState({ appIsReady: true });
-      }
-    
-  render() {
-      if(this.state.isLoading){
-        return(
-            <Content contentContainerStyle={styles.restaurantlistContainer} rounded>
-                <Body>
-                    <Spinner color="blue" style={styles.spinnerContainer}/>
-                </Body> 
-            </Content> 
-        ) 
-      }else{ 
-        return (   
-            <Content contentContainerStyle={styles.restaurantlistContainer} rounded> 
- 
-            <FlatList
-            data={this.state.dataSource}
-            extraData={this.state} 
-            renderItem={({item}) => 
-            
-            <ListItem style={styles.restaurantContainer}
-            button onPress={() => this.openDialog(true)} >
+    }
 
-                <Left>
+    render() {
+        if (this.state.isLoading) {
+            return (
+                <Content contentContainerStyle={styles.restaurantlistContainer} rounded>
                     <Body>
-                        <Thumbnail square source={Food}
-                                    style={styles.restaurantImage} />
-                    
-                        <Text note>{item.rimage}</Text>
-                        <Stars
-                            rating={item.ratings}
-                            count={5}
-                            half={true}
-                            fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
-                            emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
-                            halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
-                        />
-                        
+                        <Spinner color="blue" style={styles.spinnerContainer} />
                     </Body>
-                    
-                    <Body Small>
-                        <Text>{item.rname} </Text>
-                        <Text note>{item.rdetail}</Text>
-                    </Body> 
-                </Left> 
-                
-                <Right>
-                    <Text note>{item.rtime} </Text>
-                </Right>
-            </ListItem>  
-            }
-            keyExtractor={(item, index) => `key-${index}`}
-            /> 
+                </Content>
+            )
+        } else {
+            return (
+                <Content contentContainerStyle={styles.restaurantlistContainer} rounded>
 
-            <Dialog 
-                visible={this.state.showDialog} 
-                title="Reservation"
-                onTouchOutside={() => this.setState({showDialog: false})} > 
+                    <FlatList
+                        data={this.state.dataSource}
+                        extraData={this.state}
+                        renderItem={({ item }) =>
 
-                <Form contentContainerStyle={styles.dialogContainer}> 
-                    <Item>  
-                        <Input placeholder="Table For" /> 
-                    </Item> 
-                    <Button onPress={() => this.props.navigation.navigate('test')}  >
-                        <Text>Ok</Text>
-                    </Button>  
-                </Form>
-                 
-            </Dialog> 
+                            <ListItem style={styles.restaurantContainer}
+                                button onPress={() => this.openDialog(true)} >
+                                <Left>
+                                    <Left>
+                                        <Thumbnail square source={Food}
+                                            style={styles.restaurantImage} />
+                                        <Stars
+                                            rating={item.ratings}
+                                            count={5}
+                                            half={true}
+                                            fullStar={<Icon name={'star'} style={[styles.myStarStyle]} />}
+                                            emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]} />}
+                                            halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]} />}
+                                        />
+                                    </Left>
 
-            </Content>  
-        ); 
-      } 
-    
-  }
-} 
-const styles = {  
+                                    <Body Small>
+                                        <Text>{item.rname} </Text>
+                                        <Text note>{item.rdetail}</Text>
+                                    </Body>
+                                </Left>
+
+                                <Right>
+                                    <Text note>{item.rtime} </Text>
+                                </Right>
+                            </ListItem>
+                        }
+                        keyExtractor={(item, index) => `key-${index}`}
+                    />
+
+                    <Dialog
+                        visible={this.state.showDialog}
+                        title="Reservation"
+                        onTouchOutside={() => this.setState({ showDialog: false })}
+                        contentContainerStyle={styles.dialogContainer} >
+
+                        <Form >
+
+                            <DatePicker
+                                style={{ width: 200 }}
+                                date={this.state.datetime}
+                                mode="datetime"
+                                format="YYYY-MM-DD HH:mm"
+                                minDate="2018-06-05"
+                                maxDate="2018-07-05"
+                                confirmBtnText="Confirm"
+                                cancelBtnText="Cancel"
+                                customStyles={{
+                                    dateIcon: {
+                                        position: 'absolute',
+                                        left: 0,
+                                        top: 4,
+                                        marginLeft: 0
+                                    },
+                                    dateInput: {
+                                        marginLeft: 36
+                                    }
+                                }}
+                                minuteInterval={10}
+                                onDateChange={(datetime) => { this.setState({ datetime: datetime }); }}
+                            />
+
+                            <Item
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginBottom: 5,
+                                }}>
+                                <Input placeholder="Table For"
+                                    onchange={(text) => { this.setState({ guest: text }); }} />
+                            </Item>
+
+                            <Orderbutton />
+                        </Form>
+                    </Dialog>
+
+                    <Text
+                        onChange={this.fetchdata()}
+                        style={{ color: "lightgrey" }}
+                    >test{this.props.searchresult}</Text>
+
+                </Content>
+            );
+        }
+
+    }
+}
+
+const styles = {
     spinnerContainer: {
-        flex: 1,  
+        flex: 1,
     },
-    restaurantlistContainer: { 
+    restaurantlistContainer: {
         height: 500,
-        backgroundColor:'lightgrey',
-        margin: 5,   
+        backgroundColor: 'lightgrey',
+        margin: 5,
         borderRadius: 4,
         borderWidth: 0.5,
-        borderColor: '#d6d7da', 
-      }, 
-     
-    restaurantContainer:{
-        backgroundColor:'white',  
-        marginLeft: 0,  
-        margin: 0, 
-        marginBottom:5,  
-      },
-    
-    restaurantImage:{ 
-        marginLeft: 2,
-      },
-    
-    dialogContainer: {
-        flexGrow:1,
-        flexDirection:"column",
-        justifyContent:"center"
-   }, 
-   myStarStyle: {
-    color: 'yellow',
-    backgroundColor: 'transparent',
-    textShadowColor: 'black',
-    textShadowOffset: {width:1, height:1},
-    textShadowRadius: 2,
-  },
-  myEmptyStarStyle: {
-    color: 'white',
-  }
- 
-}; 
+        borderColor: '#d6d7da',
+    },
 
-export default withNavigation(SearchFoodList);
- 
+    restaurantContainer: {
+        backgroundColor: 'white',
+        marginLeft: 0,
+        margin: 0,
+        marginBottom: 5,
+    },
+
+    restaurantImage: {
+        marginLeft: 2,
+    },
+
+    dialogContainer: {
+        flexGrow: 1,
+        flexDirection: "column",
+    },
+
+    myStarStyle: {
+        color: 'yellow',
+        backgroundColor: 'transparent',
+        textShadowColor: 'black',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 2,
+    },
+    myEmptyStarStyle: {
+        color: 'white',
+    }
+
+};
+
+const mapStateToProps = (state, ownProps) => {
+    return {
+        searchresult: state.searchReducer.search
+    };
+}
+
+export default connect(mapStateToProps)(SearchFoodList);
+

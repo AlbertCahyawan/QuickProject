@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { View, Platform, Image, Text, KeyboardAvoidingView, Button } from 'react-native';
+import { View, Platform, Image, KeyboardAvoidingView, } from 'react-native';
+
+import {Button,Text} from 'native-base'
+
 import { connectStyle } from 'native-base';
 
 import RegisterForm from '../components/RegisterForm'
@@ -40,13 +43,18 @@ export default class RegisterScreen extends Component {
          </View>
           
          <RegisterForm/>  
-         
        </KeyboardAvoidingView>
     );
   }
 }
 
 const styles = {
+  buttonContainer: {  
+    marginTop: 10,
+    padding: 10, 
+},  
+
+
   container: {
         flex: 1,
         backgroundColor: 'lightblue',

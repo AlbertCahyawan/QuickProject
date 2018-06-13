@@ -46,11 +46,11 @@ class SideBar extends Component {
                     /> 
             
           <Text style={{ color:"white" }}>
-            Name
+          {this.props.firstname} {this.props.lastname}
           </Text>
           
           <Text style={{ color:"white" }}>
-          {`${this.props.email}`} 
+          {this.props.email}
           </Text>
         
         </Left>
@@ -74,10 +74,11 @@ class SideBar extends Component {
   }
 }
 
-
 const mapStateToProps = (state, ownProps) => {
   return {
       email : state.auth.email, 
+      firstname : state.auth.firstname, 
+      lastname : state.auth.lastname, 
   };
 }
 
