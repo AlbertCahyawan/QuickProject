@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connectStyle, Text, Button, List, ListItem, Left, Body, Thumbnail, Content, Right, Container, Spinner, Input, Form, Item, Label } from 'native-base';
+import { Text, ListItem, Left, Body, Thumbnail, Content, Right, Spinner, Input, Form, Item, Button } from 'native-base';
 
 import { connect } from 'react-redux';
 
@@ -28,15 +28,22 @@ const cacheImages = images => images.map(image => {
 
 class SearchFoodList extends Component {
     constructor(props) {
+        var date = new Date().getDate();
+        var month = new Date().getMonth() + 1;
+        var year = new Date().getFullYear();
+
+
+        var hour = new Date().getHours();
+        var minute = new Date().getMinutes();
+
         super(props);
         this.state = {
+            datetime: year + "-" + month + "-" + date + " " + hour + "-" + minute,
             refreshing: false,
             dataSource: [],
-            guest: '1',
+            guest: 1,
         };
     }
-
-    state = {}
 
     openDialog(show) {
         this.setState({ showDialog: show })
@@ -60,9 +67,32 @@ class SearchFoodList extends Component {
         setTimeout(() => alert("No touched!"), 100);
     }
 
+    SendReservation() {
+        fetch('http://188.166.210.104:3000/Reservation', {
+            method: 'post',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                restaurantid: 1,
+                customerid: 1,
+                noguest: this.state.guest,
+                datetime: this.state.datetime,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                alert(responseJson)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
     fetchdata() {
-        var URL = 'http://188.166.210.104:3000/Restaurant/'+ this.props.searchresult 
-        fetch( URL, { timeout: 1000 }, {
+        var URL = 'http://188.166.210.104:3000/Restaurant/' + this.props.searchresult
+        fetch(URL, { timeout: 1000 }, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -76,7 +106,6 @@ class SearchFoodList extends Component {
                     dataSource: responseJson,
                 }, function () {
                 });
-
             })
             .catch((error) => {
                 console.error(error);
@@ -84,7 +113,7 @@ class SearchFoodList extends Component {
     }
 
     componentDidMount() {
-        this._loadAssetsAsync(); 
+        this._loadAssetsAsync();
     }
 
     async _loadAssetsAsync() {
@@ -94,6 +123,7 @@ class SearchFoodList extends Component {
     }
 
     render() {
+
         if (this.state.isLoading) {
             return (
                 <Content contentContainerStyle={styles.restaurantlistContainer} rounded>
@@ -104,8 +134,7 @@ class SearchFoodList extends Component {
             )
         } else {
             return (
-                <Content contentContainerStyle={styles.restaurantlistContainer} rounded>
-
+                <Content contentContainerStyle={styles.restaurantlistContainer} rounded> 
                     <FlatList
                         data={this.state.dataSource}
                         extraData={this.state}
@@ -182,16 +211,18 @@ class SearchFoodList extends Component {
                                 <Input placeholder="Table For"
                                     onchange={(text) => { this.setState({ guest: text }); }} />
                             </Item>
+                            <Text>{this.state.guest} and {this.state.datetime}</Text>
+                            
+                            <Button onPress={() => this.SendReservation()}><Text>Reserve</Text></Button>
 
                             <Orderbutton />
                         </Form>
-                    </Dialog>
+                    </Dialog> 
 
                     <Text
-                        onChange={this.fetchdata()}
+                        onTextChange={this.fetchdata()}
                         style={{ color: "lightgrey" }}
                     >test{this.props.searchresult}</Text>
-
                 </Content>
             );
         }

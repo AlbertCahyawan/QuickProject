@@ -46,7 +46,7 @@ const MainNav = DrawerNavigator(
       test: { screen: testScreen },   
     },
     { 
-      initialRouteName: 'Home', 
+      initialRouteName: 'Support', 
       contentComponent: props => <SideBar {...props} />,
       drawerPosition: 'left',
       contentOptions: {
@@ -61,7 +61,7 @@ const MainApp = DrawerNavigator(
     Home: { screen: MainNav }, 
   },
   { 
-    initialRouteName: 'Login',  
+    initialRouteName: 'Home',  
   }
 );
 

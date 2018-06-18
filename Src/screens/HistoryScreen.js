@@ -1,18 +1,7 @@
-import React, { Component } from 'react';
-import { AppRegistry, Alert } from "react-native";
-import { Container, Content, Header , Title, List, ListItem, Left, Body, Right, Button, Icon, Text} from "native-base"; 
- 
-let routes = [{ 
-  Hdate : "Jan 10, 5.38 Pm",
-  Hname : "Hanamasa", 
-  Hprice :  300000,   
-},
-{ 
-  Hdate : "Jan 6, 5.14 Pm",
-  Hname : "Genki Sushi", 
-  Hprice :  100000,   
-},  
-]; 
+import React, { Component } from 'react'; 
+import { Container, Header , Title, Left, Body, Right, Button, Icon, Text} from "native-base"; 
+import OrderHistory from '../components/OrderHistory';
+
 export default class HistoryScreen extends Component {  
 
   render() {
@@ -30,40 +19,13 @@ export default class HistoryScreen extends Component {
           <Right />
         </Header>
 
-        <Content>
-          <List contentContainerStyle={styles.list}
-              dataArray={routes}
-              renderRow={data => { 
-                  return ( 
-                    <ListItem style={styles.OrderContainer}
-                            button onPress={() => this.props.navigation.navigate('Home', )} >
-                     <Left>
-                        <Body>
-                          <Text>{data.Hdate}</Text>
-                          <Text note>{data.Hname}</Text>
-                        </Body>
-                      </Left>
-                      
-                      <Right> 
-                        <Text>IDR {data.Hprice}</Text> 
-                      </Right>  
-                    </ListItem>  
-                  );
-              }}        
-            /> 
+        <OrderHistory/>
 
-        </Content>
       </Container>
     );
   }
 } 
 
-const styles = { 
-   
-  OrderContainer:{
-      backgroundColor:'white',  
-      marginLeft: 5,  
-      margin: 5,
-    }, 
+const styles = {  
 
 }; 

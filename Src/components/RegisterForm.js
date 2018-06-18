@@ -28,10 +28,10 @@ class RegisterForm extends Component {
 
         fetch('http://188.166.210.104:3000/signup', {
             method: 'post',
-            headers: ({
+            headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
-            }),
+            },
             body: JSON.stringify({
                 email: this.state.email,
                 firstName: this.state.firstname,
