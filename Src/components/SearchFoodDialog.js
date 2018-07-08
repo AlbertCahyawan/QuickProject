@@ -43,11 +43,7 @@ class SearchFoodDialog extends Component {
         // Yes, this is a workaround :(
         // Why? See this https://github.com/facebook/react-native/issues/10471
         setTimeout(() => alert("No touched!"), 100);
-    }
-
- 
-   
-    
+    } 
       componentDidMount () { 
     }
      

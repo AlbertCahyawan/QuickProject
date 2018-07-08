@@ -1,28 +1,33 @@
 import React, { Component } from 'react';
-import { Platform, image  } from 'react-native';
-import Expo from 'expo';
- 
-import { STATUS_BAR_HEIGHT } from '../constants'; 
+import { Container, Header, Title, Left, Icon, Right, Button, Body, Content, Text, Item, Thumbnail, H1 } from "native-base";
 
-import SearchFood from '../components/SearchFood' 
-import SearchFoodList from '../components/SearchFoodList'
-import Counter from '../components/Testcounter' 
+import Suggestion from '../components/Suggestion'
 
-import {  Container, Root, Header, Title, Left, Icon, Right,
-        Button, Body, Content,Text, Card, CardItem,Item, Input, 
-        List, ListItem, Thumbnail } from "native-base";
- 
+import Food from '../assets/images.jpg';
+
+const cacheImages = images => images.map(image => {
+  if (typeof image === 'string') return Image.prefetch(image);
+  return Expo.Asset.fromModule(image).downloadAsync();
+});
+
 
 export default class HomeScreen extends Component {
-   
- 
-  render() {  
-    const { params } = this.props.navigation.state;
-    const Name = params ? params.Name : null;
-    
-    return ( 
+
+  componentDidMount() {
+    this._loadAssetsAsync();
+  }
+
+  async _loadAssetsAsync() {
+    const imageAssets = cacheImages([Food]);
+    await Promise.all([...imageAssets]);
+    this.setState({ appIsReady: true });
+  }
+
+  render() {
+
+    return (
       <Container
-      style={styles.container}> 
+        style={styles.container}>
         <Header>
           <Left>
             <Button
@@ -35,39 +40,35 @@ export default class HomeScreen extends Component {
             <Title>HomeScreen</Title>
           </Body>
           <Right />
-        </Header> 
+        </Header>
+
+        <Button style={{ margin: 10 }}
+            block info onPress={() => this.props.navigation.navigate("Search")}>
+            <Text>Seach for restaurant</Text>
+            <Icon name="ios-search" />
+          </Button>
         
-        <Content>
-          <SearchFood/>     
-          <SearchFoodList/>
-        </Content> 
+        <Content style={{ backgroundColor: 'lightblue' }}>
+        <Suggestion/>
+        </Content>
 
       </Container>
-        
+
     );
   }
-}  
+}
 
 const styles = {
-  container: { 
-    height:'100%',
-    backgroundColor:'white',
+  container: {
+    height: '100%',
+    backgroundColor: 'white',
   },
 
-  imageStyle: {
-    marginTop: 20,
-    marginLeft: 10,
-    width: 40,
-    height: 40
+  suggestion: {
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
-  header:{
-    height: Platform.OS === 'android' ? 54 + STATUS_BAR_HEIGHT : 54,
-    backgroundColor: '#2196F3'
-  },
-  headertitle:{
-    marginTop: Platform.OS === 'android' ? STATUS_BAR_HEIGHT : 0,
-    color: 'white'
-  },
-  
+};
 
-}; 
+

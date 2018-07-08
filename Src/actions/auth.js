@@ -1,13 +1,14 @@
-import { NavigationActions } from 'react-navigation';
 
   
-export const login = (email,firstname,lastname,phonenumber) => {
+export const login = (id,email,firstname,lastname,phonenumber,profileimage) => {
     return {
         type: 'LOGIN',
+        id:id,
         email:email,
         firstname:firstname,
         lastname:lastname,
         phonenumber:phonenumber, 
+        profileimage:profileimage,
     };
 };
  

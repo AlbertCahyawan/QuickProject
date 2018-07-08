@@ -1,16 +1,17 @@
 import React, { Component } from 'react';  
+ 
+import {View} from 'react-native';
+import {  Text, Button, Icon, Left, Body, Right} from 'native-base'; 
 
-import { View, Image, KeyboardAvoidingView,} from 'react-native';
-import { connectStyle, Content,Text, Button, Icon, Left, Body, Right} from 'native-base';
-import { withNavigation } from 'react-navigation'; 
+import NavigationService from '../Navigation/NavigationService';
 
- class SocialMedia extends Component {
-     render(){
+ export default class SocialMedia extends Component { 
+    render(){
          return( 
-            <Content>
-
+            <View>
+                
             <Button block rounded info  
-                    onPress={() => this.props.navigation.navigate('Register', { Name: 'Jane' })}
+                    onPress={() => NavigationService.navigate('Register', { userName: 'Lucy' }) }
                     style={styles.buttonContainer}>
               <Text> SignUp </Text>
             </Button>  
@@ -22,7 +23,7 @@ import { withNavigation } from 'react-navigation';
             <Body style={styles.socialMediaButtonContainer}> 
                 <Left>
                 <Button iconLeft info
-                        onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
+                        onPress={() => NavigationService.navigate('HomeStack', { Name: 'Jane' })}
                         style={styles.socialMediaButton}>
                     <Icon name='logo-facebook' />
                     <Text>Facebook</Text>
@@ -31,7 +32,7 @@ import { withNavigation } from 'react-navigation';
 
                 <Right>
                 <Button iconLeft info
-                        onPress={() => this.props.navigation.navigate('Home', { Name: 'Jane' })}
+                        onPress={() => NavigationService.navigate('HomeStack', { Name: 'Jane' })}
                         style={styles.socialMediaButton}>
                     <Icon name="logo-googleplus" />
                     <Text>Google</Text>
@@ -40,7 +41,7 @@ import { withNavigation } from 'react-navigation';
 
            </Body> 
 
-           </Content>
+           </View>
          );
      }
 
@@ -65,5 +66,4 @@ const styles = {
     },  
  
 }; 
-
-export default withNavigation(SocialMedia)
+ 

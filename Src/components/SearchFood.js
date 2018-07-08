@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import { connectStyle, Item, Icon, Input, Text, Button, Content, } from 'native-base';
+import { Item, Icon, Input, Text, Button, Content, } from 'native-base';
 
 import { findrestaurant } from '../actions/index'; 
 import { connect } from 'react-redux'; 
-
-import { withNavigation } from 'react-navigation'; 
-
-
+   
 class SearchFood extends Component {
   constructor(props) {
     super(props)
@@ -58,8 +55,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     searchRestaurant: (search) => { dispatch(findrestaurant(search)); }  
   }
-} 
-    
-   
- 
+}  
+
 export default connect(mapStateToProps, mapDispatchToProps)(SearchFood);

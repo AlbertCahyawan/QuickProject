@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Text, ListItem, Left, Body, Thumbnail, Content, Right, Spinner, Input, Form, Item, Button } from 'native-base';
 
+import { FlatList } from 'react-native'; 
 import { connect } from 'react-redux';
+
+import NavigationService from '../Navigation/NavigationService';
 
 import DatePicker from 'react-native-datepicker';
 
@@ -13,14 +16,9 @@ import {
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { FlatList } from 'react-native';
-import { withNavigation } from 'react-navigation';
 
 import Food from '../assets/restaurant.png';
-
-import Orderbutton from './Orderbutton';
-
-
+  
 const cacheImages = images => images.map(image => {
     if (typeof image === 'string') return Image.prefetch(image);
     return Expo.Asset.fromModule(image).downloadAsync();
@@ -88,6 +86,7 @@ class SearchFoodList extends Component {
             .catch((error) => {
                 console.error(error);
             });
+            NavigationService.navigate('test')
     }
 
     fetchdata() {
@@ -134,7 +133,7 @@ class SearchFoodList extends Component {
             )
         } else {
             return (
-                <Content contentContainerStyle={styles.restaurantlistContainer} rounded> 
+                <Content contentContainerStyle={styles.restaurantlistContainer} rounded>  
                     <FlatList
                         data={this.state.dataSource}
                         extraData={this.state}
@@ -144,7 +143,7 @@ class SearchFoodList extends Component {
                                 button onPress={() => this.openDialog(true)} >
                                 <Left>
                                     <Left>
-                                        <Thumbnail square source={Food}
+                                        <Thumbnail square source={{ uri: "http://188.166.210.104:3000/RestaurantLogo/"+item.rimage}}
                                             style={styles.restaurantImage} />
                                         <Stars
                                             rating={item.ratings}
@@ -210,12 +209,9 @@ class SearchFoodList extends Component {
                                 }}>
                                 <Input placeholder="Table For"
                                     onchange={(text) => { this.setState({ guest: text }); }} />
-                            </Item>
-                            <Text>{this.state.guest} and {this.state.datetime}</Text>
-                            
+                            </Item>  
                             <Button onPress={() => this.SendReservation()}><Text>Reserve</Text></Button>
-
-                            <Orderbutton />
+ 
                         </Form>
                     </Dialog> 
 
@@ -223,6 +219,7 @@ class SearchFoodList extends Component {
                         onTextChange={this.fetchdata()}
                         style={{ color: "lightgrey" }}
                     >test{this.props.searchresult}</Text>
+
                 </Content>
             );
         }

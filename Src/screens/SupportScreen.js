@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Header, Title, Left, Body, Content, Right, Icon, Button, Thumbnail, Text, } from "native-base";
+import { Container, Header, Title, Left, Body, Content, Right, Icon, Button, Thumbnail, Text, Item, } from "native-base";
 
 import { ImagePicker } from 'expo';
 
@@ -8,22 +8,26 @@ export default class SupportScreen extends Component {
   componentDidMount() {
   }
 
-  state = {
-    image: null,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      image: { uri: "http://188.166.210.104:3000/profileimage/profileimage-1529340914314.png" },
+    };
+  }
 
   test() {
-    const formData = new FormData();
-    formData.append('avatar', {
+    const formData = new FormData(); 
+    formData.append('id', 1)
+    formData.append('profileimage', {
       uri: this.state.image.uri,
       type: 'image/png',
-      name: 'nama.jpg',
+      name: 'nama.jpg', 
     });
 
-    fetch("http://188.166.210.104:3000/uploads", {
+    fetch("http://188.166.210.104:3000/uploads/profileimage", {
       method: 'POST',
       body: formData,
-      headers: { 
+      headers: {
         Accept: 'application/json',
         'Content-Type': 'multipart/form-data',
       },
@@ -49,12 +53,11 @@ export default class SupportScreen extends Component {
     if (!result.cancelled) {
       this.setState({ image: result });
     }
-    alert(result.uri.length )
   };
 
   render() {
-    let { image } = this.state;
- 
+    //let { image } = this.state;
+
     return (
       <Container>
         <Header>
@@ -70,9 +73,9 @@ export default class SupportScreen extends Component {
         </Header>
         <Content padder>
 
-          <Button onPress={this._pickImage}><Text>Pick an image from camera rolll</Text></Button>
-          {image &&
-            <Thumbnail source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
+          <Item onPress={this._pickImage}> 
+            <Thumbnail round source={{ uri: this.state.image.uri }} />
+          </Item>
 
           <Button onPress={() => this.test()}><Text>test123</Text></Button>
 

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Content, List, ListItem, Left, Body, Right, Text, Button } from "native-base";
+import { Content, ListItem, Left, Body, Right, Text, Button } from "native-base";
 import {FlatList} from 'react-native';
+
+
+import NavigationService from '../Navigation/NavigationService';
 
 let routes = [{
     Hdate: "Jan 10, 5.38 Pm",
@@ -23,7 +26,7 @@ export default class OrderHistory extends Component {
     }
 
     // fetchmenu() {
-    //     var URL = 'http://188.166.210.104:3000/Menu/1' //need to change the id of menu
+    //     var URL = 'http://188.166.210.104:3000/order/2' //need to change the id of menu
     //     fetch(URL, { timeout: 1000 }, {
     //         method: 'GET',
     //         headers: {
@@ -53,7 +56,7 @@ export default class OrderHistory extends Component {
                     extraData={this.state}
                     renderItem={({ item }) =>
                         <ListItem style={styles.OrderContainer}
-                            button onPress={() => this.props.navigation.navigate('Home', )} >
+                            button onPress={() => NavigationService.navigate('Home', )} >
                             <Left>
                                 <Body>
                                     <Text>{item.Hdate}</Text>

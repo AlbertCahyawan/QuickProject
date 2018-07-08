@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 
 import { View, Image, KeyboardAvoidingView, } from 'react-native';
-import { connectStyle, Content, Form, Item, Input, Text, Button, Icon, Left, Body, Right, Toast } from 'native-base';
+import { Content, Item, Input, Text, Button, Toast } from 'native-base';
 
-import Expo from 'expo';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 import { login } from '../actions/auth';
-import SocialMedia from './SocialMedia'
+import SocialMedia from './SocialMedia';
 
-import logo from '../assets/icons/pure-icon.png';
-
-const cacheImages = images => images.map(image => {
-  if (typeof image === 'string') return Image.prefetch(image);
-  return Expo.Asset.fromModule(image).downloadAsync();
-});
+import logo from '../assets/LogoName.png';
 
 class LoginForm extends Component {
 
@@ -45,7 +39,9 @@ class LoginForm extends Component {
         if (responseJson == "FailedAuthenthication") {
           alert("Wrong Email Or Password")
         } else {
-          this.props.onLogin(responseJson[0].email, responseJson[0].firstname, responseJson[0].lastname, responseJson[0].phonenumber);
+          alert(JSON.stringify(responseJson))
+          this.props.onLogin(responseJson[0].id, responseJson[0].email, responseJson[0].firstname,
+            responseJson[0].lastname, responseJson[0].phonenumber, responseJson[0].profileimage);
         }
       })
       .catch((error) => {
@@ -53,15 +49,13 @@ class LoginForm extends Component {
       });
   }
 
-  userLogin(e) {
-
+  userLogin(e) { 
     if (this.state.email == "" || this.state.password == "") {
       Toast.show({
         text: 'Please Fill Both email and password',
         buttonText: 'Okay',
         duration: 3000
-      })
-
+      }) 
     }
     else {
       this.SendLoginForm()
@@ -69,23 +63,7 @@ class LoginForm extends Component {
 
     e.preventDefault();
   }
-
-  state = {
-    appIsReady: false
-  }
-
-  componentDidMount() {
-    this._loadAssetsAsync();
-  }
-
-  async _loadAssetsAsync() {
-    const imageAssets = cacheImages([logo]);
-    await Promise.all([...imageAssets]);
-    this.setState({ appIsReady: true });
-  }
-
-
-
+ 
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -96,49 +74,47 @@ class LoginForm extends Component {
         </View>
 
         <Content style={styles.Formcontainer}>
-          <Form>
 
-            <Item rounded bordered
-              style={styles.input}>
-              <Input
-                placeholder="Email"
-                placeholderTextColor="grey"
-                returnKeyType="next"
-                onSubmitEDITING={() => this.passwordInput.focus()}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
+          <Item rounded bordered
+            style={styles.input}>
+            <Input
+              placeholder="Email"
+              placeholderTextColor="grey"
+              returnKeyType="next"
+              onSubmitEDITING={() => this.passwordInput.focus()}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
 
-                value={this.state.email}
-                onChangeText={(text) => this.setState({ email: text })} />
-            </Item>
+              value={this.state.email}
+              onChangeText={(text) => this.setState({ email: text })} />
+          </Item>
 
-            <Item rounded bordered
-              style={styles.input}>
-              <Input
-                placeholder="Password"
-                placeholder="Password"
-                placeholderTextColor="grey"
-                returnKeyType="send"
-                secureTextEntry
-                ref={(input) => this.passwordInput = input}
+          <Item rounded bordered
+            style={styles.input}>
+            <Input
+              placeholder="Password"
+              placeholder="Password"
+              placeholderTextColor="grey"
+              returnKeyType="send"
+              secureTextEntry
+              ref={(input) => this.passwordInput = input}
 
-                value={this.state.password}
-                onChangeText={(text) => this.setState({ password: text })} />
+              value={this.state.password}
+              onChangeText={(text) => this.setState({ password: text })} />
 
-            </Item>
+          </Item>
 
-            <Text
-              style={styles.forgotPassword}
+          <Text
+            style={styles.forgotPassword}
 
-            >Forgot password</Text>
+          >Forgot password</Text>
 
-            <Button block rounded info
-              onPress={(e) => this.userLogin(e)}
-              style={styles.buttonContainer}>
-              <Text> Login </Text>
-            </Button>
-          </Form>
+          <Button block rounded info
+            onPress={(e) => this.userLogin(e)}
+            style={styles.buttonContainer}>
+            <Text> Login </Text>
+          </Button>
 
           <SocialMedia />
 
@@ -169,8 +145,6 @@ const styles = {
   logoStyle: {
     marginTop: 20,
     marginLeft: 10,
-    width: 40,
-    height: 40
   },
 
   input: {
@@ -192,13 +166,13 @@ const mapStateToProps = (state, ownProps) => {
     email: state.auth.email,
     firstname: state.auth.firstname,
     lastname: state.auth.lastname,
-    phonenumber: state.auth.phonenumber, 
+    phonenumber: state.auth.phonenumber,
   };
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLogin: (email, firstname, lastname, phonenumber) => { dispatch(login(email, firstname, lastname, phonenumber)); }
+    onLogin: (id, email, firstname, lastname, phonenumber, profileimage) => { dispatch(login(id, email, firstname, lastname, phonenumber, profileimage)); }
   }
 }
 

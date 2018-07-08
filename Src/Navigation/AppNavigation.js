@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-  
-import { createStore, combineReducers } from 'redux';
-import { connect } from 'react-redux'; 
 
-import {addNavigationHelpers,DrawerNavigator } from 'react-navigation'; 
-
-import SplashScreen from '../screens/SplashScreen';
+import { StackNavigator, DrawerNavigator } from 'react-navigation';
+ 
 import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/LoginScreen';   
+import SearchScreen from '../screens/SearchScreen';
+import LoginScreen from '../screens/LoginScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import RegisterScreen from '../screens/RegisterScreen';
-  
+
 import ProfileScreen from '../screens/ProfileScreen'
 import HistoryScreen from '../screens/HistoryScreen'
 import SupportScreen from '../screens/SupportScreen'
@@ -18,50 +15,62 @@ import SupportScreen from '../screens/SupportScreen'
 import ModalScreen from '../modals/ModalScreen';
 import testScreen from '../screens/testScreen';
 
-import SideBar from "../SideBar/SideBar.js";   
+import SideBar from "../SideBar/SideBar.js";
 
-const LoginNav = DrawerNavigator(
-  {
-    Splash: { screen: SplashScreen }, 
+const LoginNav = StackNavigator(
+  { 
 
     Login: { screen: LoginScreen },
     Register: { screen: RegisterScreen },
-    ForgotPwd: { screen: ForgotPasswordScreen }, 
+    ForgotPwd: { screen: ForgotPasswordScreen },
   },
-  { 
-    initialRouteName: 'Login', 
+  {
+    initialRouteName: 'Login',
+    headerMode: 'none',
+    navigationOptions: () => ({
+      header: null
+    }),
   }
 );
 
 const MainNav = DrawerNavigator(
-    {
-      Splash: { screen: SplashScreen },  
-
-      Home: { screen: HomeScreen },
-      Profile: { screen: ProfileScreen },
-      History: { screen: HistoryScreen},
-      Support: { screen: SupportScreen},
-
-      MyModal: { screen: ModalScreen },
-      test: { screen: testScreen },   
-    },
-    { 
-      initialRouteName: 'Support', 
-      contentComponent: props => <SideBar {...props} />,
-      drawerPosition: 'left',
-      contentOptions: {
-      activeTintColor: '#000',
-      }
-    }
-);   
-
-const MainApp = DrawerNavigator(
-  {
-    Login: { screen: LoginNav }, 
-    Home: { screen: MainNav }, 
-  },
   { 
-    initialRouteName: 'Home',  
+
+    Home: { screen: HomeScreen },
+    Search: {screen: SearchScreen},
+    Profile: { screen: ProfileScreen },
+    History: { screen: HistoryScreen },
+    Support: { screen: SupportScreen },
+
+    MyModal: { screen: ModalScreen },
+    test: { screen: testScreen },
+  },
+  {
+    initialRouteName: 'Home',
+    contentComponent: props => <SideBar {...props} />,
+    drawerPosition: 'left',
+    contentOptions: {
+      activeTintColor: '#000',
+
+      headerMode: 'none',
+      navigationOptions: () => ({
+        header: null
+      })
+    }
+  }
+);
+
+const MainApp = StackNavigator(
+  {
+    LoginStack: { screen: LoginNav },
+    HomeStack: { screen: MainNav },
+  },
+  {
+    initialRouteName: 'LoginStack',
+    headerMode: 'none',
+    navigationOptions: () => ({
+      header: null
+    }),
   }
 );
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { Content, Form, Item, Input, Text, Button, H1, } from 'native-base';
+import { Content, Item, Input, Text, Button, H1, Body, } from 'native-base';
+import { View } from 'react-native';
 
 import { withNavigation } from 'react-navigation';
 
@@ -15,7 +16,7 @@ class RegisterForm extends Component {
             password: '',
         };
     }
-    Register() { 
+    Register() {
 
         if (this.state.email == "" || this.state.firstname == "" || this.state.lastName == "" || this.state.password == "" || this.state.phonenumber == "") {
             alert("fill all the form first before registering")
@@ -49,31 +50,15 @@ class RegisterForm extends Component {
             });
     }
 
-
-
-
     render() {
 
         return (
             <Content style={styles.container}>
                 <H1>Register</H1>
-                <Form>
 
-                    <Item rounded bordered
-                        style={styles.input}>
-                        <Input
-                            placeholder="Email"
-                            placeholderTextColor="grey"
-                            returnKeyType="next"
-                            onSubmitEDITING={() => this.passwordInput.focus()}
-                            keyboardType="email-address"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            onChangeText={(text) => this.setState({ email: text })} />
-                    </Item>
-
-                    <Item rounded bordered
-                        style={styles.input}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Item
+                        style={styles.inputName}>
                         <Input
                             placeholder="FirstName"
                             placeholderTextColor="grey"
@@ -84,8 +69,8 @@ class RegisterForm extends Component {
                             onChangeText={(text) => this.setState({ firstname: text })} />
                     </Item>
 
-                    <Item rounded bordered
-                        style={styles.input}>
+                    <Item
+                        style={styles.inputName}>
                         <Input
                             placeholder="LastName"
                             placeholderTextColor="grey"
@@ -95,43 +80,58 @@ class RegisterForm extends Component {
                             autoCorrect={false}
                             onChangeText={(text) => this.setState({ lastname: text })} />
                     </Item>
+                </View>
 
-                    <Item rounded bordered
-                        style={styles.input}>
-                        <Input
-                            placeholder="PhoneNumber"
-                            placeholderTextColor="grey"
-                            returnKeyType="next"
-                            onSubmitEDITING={() => this.passwordInput.focus()}
-                            keyboardType="phone-pad"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            onChangeText={(text) => this.setState({ phonenumber: text })} />
-                    </Item>
 
-                    <Item rounded bordered
-                        style={styles.input}>
-                        <Input
-                            placeholder="Password"
-                            placeholderTextColor="grey"
-                            returnKeyType="send"
-                            secureTextEntry
-                            ref={(input) => this.passwordInput = input}
-                            onChangeText={(text) => this.setState({ password: text })} />
-                    </Item>
+                <Item
+                    style={styles.input}>
+                    <Input
+                        placeholder="Email"
+                        placeholderTextColor="grey"
+                        returnKeyType="next"
+                        onSubmitEDITING={() => this.passwordInput.focus()}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={(text) => this.setState({ email: text })} />
+                </Item>
 
-                    <Button block rounded info
-                        onPress={() => this.Register()}
-                        style={styles.buttonContainer}>
-                        <Text> Register </Text>
-                    </Button>
+                <Item
+                    style={styles.input}>
+                    <Input
+                        placeholder="PhoneNumber"
+                        placeholderTextColor="grey"
+                        returnKeyType="next"
+                        onSubmitEDITING={() => this.passwordInput.focus()}
+                        keyboardType="phone-pad"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={(text) => this.setState({ phonenumber: text })} />
+                </Item>
 
-                </Form>
-                <Button block info
-                    onPress={() => this.props.navigation.goBack()}
+                <Item
+                    style={styles.input}>
+                    <Input
+                        placeholder="Password"
+                        placeholderTextColor="grey"
+                        returnKeyType="send"
+                        secureTextEntry
+                        ref={(input) => this.passwordInput = input}
+                        onChangeText={(text) => this.setState({ password: text })} />
+                </Item>
+
+                <Button block rounded info
+                    onPress={() => this.Register()}
                     style={styles.buttonContainer}>
-                    <Text> Back </Text>
+                    <Text> Register </Text>
                 </Button>
+
+                <Body style={styles.buttonContainer}>
+                        <Text onPress={() => this.props.navigation.navigate('Login')}>
+                        Already Registered? Login Here
+                         </Text>
+                </Body>
+
             </Content>
         );
     }
@@ -145,6 +145,12 @@ const styles = {
     input: {
         marginBottom: 10,
         backgroundColor: 'white',
+    },
+
+    inputName: {
+        marginBottom: 10,
+        backgroundColor: 'white',
+        width: '50%',
     },
 
     buttonContainer: {

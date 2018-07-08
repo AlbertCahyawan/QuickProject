@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { AppRegistry, Alert } from "react-native";
+import React, { Component } from 'react'; 
 import { Container, Header , Title, Left, Body, Content, Right, Icon, Button, Text, Thumbnail, H1, H3,} from "native-base"; 
 import {connect} from 'react-redux';
 
@@ -26,6 +25,7 @@ class ProfileScreen extends Component {
           </Header> 
           
           <UserInfo/>
+
         </Container>
       );
 

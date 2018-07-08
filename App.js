@@ -1,13 +1,13 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import store from './Src/store'; 
+import store from './Src/store';
 
-import { Root } from "native-base"; 
-  
-import Expo from "expo";  
+import { Root } from "native-base";
+
 import AppNavigation from './Src/Navigation/AppNavigation';
-import {  ActivityIndicator  } from 'react-native';
-
+import NavigationService from './Src/Navigation/NavigationService';
+import Splash from './Src/screens/SplashScreen'
+ 
 export default class App extends Component {
 
   constructor() {
@@ -24,22 +24,23 @@ export default class App extends Component {
     });
     this.setState({ isReady: true });
   }
-  
+
   render() {
-    
+
     if (!this.state.isReady) {
+      return (
+        <Splash/>
+      );
+    }
     return (
-    <ActivityIndicator style={{flex:1}} />
-  );
-    } 
-    return ( 
       <Provider store={store}>
-        <Root> 
-         <AppNavigation /> 
-        </Root>  
+        <Root>
+          <AppNavigation ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }} />
+        </Root>
       </Provider>
     );
   }
 }
 
- 

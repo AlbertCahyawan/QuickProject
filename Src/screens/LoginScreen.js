@@ -1,22 +1,20 @@
 import React, { Component } from 'react'; 
 
-import LoginForm from '../components/LoginForm' 
-import MainNav from '../Navigation/AppNavigation' 
+import LoginForm from '../components/LoginForm'; 
 
-import { connect } from 'react-redux';
-import { View,Text } from 'react-native';
-import { connectStyle} from 'native-base';
+import { connect } from 'react-redux'; 
 
+import NavigationService from '../Navigation/NavigationService';
 
 class LoginScreen extends Component { 
   constructor(props) {
     super(props); 
   }
-  
+
   render() { 
     if (this.props.isLoggedIn) {
       return (
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('HomeStack')
       );
     }else {
       return (  

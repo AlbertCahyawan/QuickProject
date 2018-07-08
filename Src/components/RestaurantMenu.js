@@ -88,7 +88,7 @@ class RestaurantMenu extends Component {
           extraData={this.state}
           renderItem={({ item }) =>
             <View style={styles.row}>
-              <Thumbnail square source={Food} />
+              <Thumbnail square source={{uri:"http://188.166.210.104:3000/Menuimage/" + item.mimage }} />
               <Text note>{item.mname}</Text>
               <Button block success
                 onPress={() => this.AddOrder(item.mid)}  >
@@ -109,7 +109,6 @@ const styles = {
   list: {
     justifyContent: 'flex-start',
     flexDirection: 'column',
-
     //flexWrap: 'wrap',
     backgroundColor: '#CCC',
   },
