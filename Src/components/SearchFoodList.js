@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 
 import { Button, Text, Avatar, Input } from 'react-native-elements'
-import { FlatList, View, Image, ActivityIndicator, TouchableNativeFeedback } from 'react-native';
+import { FlatList, View, ActivityIndicator, TouchableNativeFeedback } from 'react-native';
 import { connect } from 'react-redux';
 
 import NavigationService from '../Navigation/NavigationService';
@@ -14,11 +14,7 @@ import {
     ConfirmDialog,
 } from 'react-native-simple-dialogs'
 import Stars from 'react-native-stars';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
-
-import Food from '../assets/restaurant.png';
-
+//import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; 
 
 class SearchFoodList extends Component {
     constructor(props) {
@@ -81,7 +77,7 @@ class SearchFoodList extends Component {
             .catch((error) => {
                 console.error(error);
             });
-        NavigationService.navigate('test')
+        NavigationService.navigate('Reservation')
     }
 
     fetchdata() {

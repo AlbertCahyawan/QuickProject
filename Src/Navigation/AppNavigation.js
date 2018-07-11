@@ -14,7 +14,7 @@ import HistoryScreen from '../screens/HistoryScreen'
 import SupportScreen from '../screens/SupportScreen'
 
 import ModalScreen from '../modals/ModalScreen';
-import testScreen from '../screens/testScreen';
+import ReservationScreen from '../screens/ReservationScreen';
 
 import SideBar from "../SideBar/SideBar.js";
 
@@ -44,10 +44,10 @@ const MainNav = DrawerNavigator(
     
     Support: { screen: SupportScreen },
     MyModal: { screen: ModalScreen },
-    test: { screen: testScreen },
+    Reservation: { screen: ReservationScreen },
   },
   {
-    initialRouteName: 'test',
+    initialRouteName: 'Home',
     contentComponent: props => <SideBar {...props} />,
     drawerPosition: 'left',
     contentOptions: {
