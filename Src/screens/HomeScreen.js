@@ -1,58 +1,49 @@
-import React, { Component } from 'react';
-import { Container, Header, Title, Left, Icon, Right, Button, Body, Content, Text, Item, Thumbnail, H1 } from "native-base";
+import React, { Component } from 'react'; 
 
-import Suggestion from '../components/Suggestion'
+import {View} from 'react-native'
+import {Header, Text, Button, Icon } from 'react-native-elements'
 
-import Food from '../assets/images.jpg';
-
-const cacheImages = images => images.map(image => {
-  if (typeof image === 'string') return Image.prefetch(image);
-  return Expo.Asset.fromModule(image).downloadAsync();
-});
-
-
+import Suggestion from '../components/Suggestion' 
+  
 export default class HomeScreen extends Component {
-
-  componentDidMount() {
-    this._loadAssetsAsync();
-  }
-
-  async _loadAssetsAsync() {
-    const imageAssets = cacheImages([Food]);
-    await Promise.all([...imageAssets]);
-    this.setState({ appIsReady: true });
-  }
-
+  
   render() {
 
     return (
-      <Container
-        style={styles.container}>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.navigate("DrawerOpen")}>
-              <Icon name="menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>HomeScreen</Title>
-          </Body>
-          <Right />
+      <View style={styles.container}>
+        <Header   
+          outerContainerStyles={{height: 60, paddingTop: 20}}
+          leftComponent={
+            <Icon
+              onPress={() => this.props.navigation.navigate("DrawerOpen")}
+              name='menu'
+              size={15}
+              color='white'
+            />
+          }
+          centerComponent={<Text h4 style={{color:'white'}}>HomeScreen</Text>}
+          statusBarProps={{ barStyle: 'dark-content', translucent: true }}
+        >
         </Header>
 
-        <Button style={{ margin: 10 }}
-            block info onPress={() => this.props.navigation.navigate("Search")}>
-            <Text>Seach for restaurant</Text>
-            <Icon name="ios-search" />
-          </Button>
-        
-        <Content style={{ backgroundColor: 'lightblue' }}>
-        <Suggestion/>
-        </Content>
+        <Button rounded
+          title='Seach for restaurant'
+          onPress={() => this.props.navigation.navigate("Search")}
+          buttonStyle={{ margin: 10 }}
+          icon={
+            <Icon
+              name='md-search'
+              type='ionicon'
+              size={15}
+              color='white'
+            />
+          }
+          iconRight
+        />
 
-      </Container>
+        <Suggestion />
+
+      </View>
 
     );
   }
@@ -61,7 +52,7 @@ export default class HomeScreen extends Component {
 const styles = {
   container: {
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: 'lightblue',
   },
 
   suggestion: {

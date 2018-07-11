@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Container, Header, Title, Left, Body, Content, Right, Icon, Button, Thumbnail, Text, Item, } from "native-base";
+
+import { View, TouchableNativeFeedback } from 'react-native';
+import { Avatar,Button } from 'react-native-elements';
 
 import { ImagePicker } from 'expo';
 
-
 export default class SupportScreen extends Component {
-  componentDidMount() {
-  }
 
   constructor(props) {
     super(props)
@@ -15,13 +14,13 @@ export default class SupportScreen extends Component {
     };
   }
 
-  test() {
-    const formData = new FormData(); 
+  UploadImage() {
+    const formData = new FormData();
     formData.append('id', 1)
     formData.append('profileimage', {
       uri: this.state.image.uri,
       type: 'image/png',
-      name: 'nama.jpg', 
+      name: 'nama.jpg',
     });
 
     fetch("http://188.166.210.104:3000/uploads/profileimage", {
@@ -59,36 +58,19 @@ export default class SupportScreen extends Component {
     //let { image } = this.state;
 
     return (
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Profile</Title>
-          </Body>
-          <Right />
-        </Header>
-        <Content padder>
+      <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: '25%' }}>
 
-          <Item onPress={this._pickImage}> 
-            <Thumbnail round source={{ uri: this.state.image.uri }} />
-          </Item>
+        <TouchableNativeFeedback onPress={this._pickImage}>
+          <Avatar
+            size="medium"
+            rounded
+            source={{ uri: this.state.image.uri }}
+          />
+        </TouchableNativeFeedback>
 
-          <Button onPress={() => this.test()}><Text>test123</Text></Button>
-
-          <Thumbnail square source={{ uri: 'http://188.166.210.104:3000/image/avatar-1529329532947.png' }} />
-
-          <Thumbnail square source={{ uri: "https://facebook.github.io/react-native/docs/assets/favicon.png" }} />
-          <Thumbnail square source={{
-            uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTA" +
-              "qAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBg" +
-              "YGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=="
-          }} />
-        </Content>
-      </Container>
+        <Button title="test"
+        onPress={() => this.UploadImage()}/>
+      </View>
     );
   }
 }

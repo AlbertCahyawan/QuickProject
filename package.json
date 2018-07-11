@@ -34,7 +34,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-dialogs": "^1.0.0-rc.1",
     "react-native-easy-toast": "^1.1.0",
-    "react-native-elements": "^0.19.1",
+    "react-native-elements": "^1.0.0-beta5",
     "react-native-gifted-listview": "0.0.15",
     "react-native-image-crop-picker": "^0.20.3",
     "react-native-image-picker": "^0.26.10",

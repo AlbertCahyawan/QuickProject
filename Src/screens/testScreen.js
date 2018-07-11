@@ -1,5 +1,4 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React from 'react'; 
 
 import { Ionicons } from '@expo/vector-icons'; // Version can be specified in package.json
 import {  StackNavigator, TabNavigator, TabBarBottom  } from 'react-navigation';
@@ -8,8 +7,9 @@ import MenuScreen from './MenuScreen';
 import BillScreen from './BillScreen';
 
 export default TabNavigator({ 
-  Menu: { screen: MenuScreen },
+  
   Cart: { screen: BillScreen },
+  Menu: { screen: MenuScreen },
 },
 {
   navigationOptions: ({ navigation }) => ({

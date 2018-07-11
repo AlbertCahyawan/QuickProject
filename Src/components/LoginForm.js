@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { View, Image, KeyboardAvoidingView, } from 'react-native';
-import { Content, Item, Input, Text, Button, Toast } from 'native-base';
+import { View, Image, KeyboardAvoidingView } from 'react-native'; 
+import { Icon, Button, Text, Input } from 'react-native-elements'
 
 import { connect } from 'react-redux';
 
@@ -17,8 +17,8 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
+      loginError: ' ',
 
-      showToast: false
     };
   }
 
@@ -38,10 +38,14 @@ class LoginForm extends Component {
       .then((responseJson) => {
         if (responseJson == "FailedAuthenthication") {
           alert("Wrong Email Or Password")
+          this.setState({
+            loginError: "Wrong Email Or Password"  
+          });
+          
         } else {
-          alert(JSON.stringify(responseJson))
-          this.props.onLogin(responseJson[0].id, responseJson[0].email, responseJson[0].firstname,
-            responseJson[0].lastname, responseJson[0].phonenumber, responseJson[0].profileimage);
+          // alert(JSON.stringify(responseJson))
+          // this.props.onLogin(responseJson[0].id, responseJson[0].email, responseJson[0].firstname,
+          //   responseJson[0].lastname, responseJson[0].phonenumber, responseJson[0].profileimage);
         }
       })
       .catch((error) => {
@@ -49,13 +53,12 @@ class LoginForm extends Component {
       });
   }
 
-  userLogin(e) { 
+  userLogin(e) {
     if (this.state.email == "" || this.state.password == "") {
-      Toast.show({
-        text: 'Please Fill Both email and password',
-        buttonText: 'Okay',
-        duration: 3000
-      }) 
+      alert(  'Please Fill Both email and password')
+      this.setState({
+        loginError: "Please Fill Both email and password"  
+      });
     }
     else {
       this.SendLoginForm()
@@ -63,7 +66,10 @@ class LoginForm extends Component {
 
     e.preventDefault();
   }
- 
+
+  componentDidMount(){ 
+   
+  }
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -73,52 +79,63 @@ class LoginForm extends Component {
             style={styles.logoStyle} />
         </View>
 
-        <Content style={styles.Formcontainer}>
+        <View style={styles.Formcontainer}>
 
-          <Item rounded bordered
-            style={styles.input}>
-            <Input
-              placeholder="Email"
-              placeholderTextColor="grey"
-              returnKeyType="next"
-              onSubmitEDITING={() => this.passwordInput.focus()}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
+          <Input
+            placeholder="Email"
+            placeholderTextColor="grey"
+            returnKeyType="next"
+            onSubmitEDITING={() => this.passwordInput.focus()}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoCorrect={false}
 
-              value={this.state.email}
-              onChangeText={(text) => this.setState({ email: text })} />
-          </Item>
+            leftIcon={
+              <Icon
+                name='md-person'
+                type='ionicon'
+                color='darkblue'
+              />
+            }
 
-          <Item rounded bordered
-            style={styles.input}>
-            <Input
-              placeholder="Password"
-              placeholder="Password"
-              placeholderTextColor="grey"
-              returnKeyType="send"
-              secureTextEntry
-              ref={(input) => this.passwordInput = input}
+            value={this.state.email}
+            onChangeText={(text) => this.setState({ email: text })}
+            style={styles.input} />
 
-              value={this.state.password}
-              onChangeText={(text) => this.setState({ password: text })} />
+          <Input
+            placeholder="Password"
+            placeholder="Password"
+            placeholderTextColor="grey"
+            returnKeyType="send"
+            secureTextEntry
+            ref={(input) => this.passwordInput = input}
 
-          </Item>
+            leftIcon={
+              <Icon
+                name='md-lock'
+                type='ionicon'
+                color='darkblue'
+              />
+            }
 
-          <Text
-            style={styles.forgotPassword}
+            errorStyle={{ color: 'red' ,textAlign:'center'}}
+            errorMessage={this.state.loginError}
+            value={this.state.password}
+            onChangeText={(text) => this.setState({ password: text })}
+            style={styles.input} />
 
-          >Forgot password</Text>
-
-          <Button block rounded info
-            onPress={(e) => this.userLogin(e)}
-            style={styles.buttonContainer}>
-            <Text> Login </Text>
-          </Button>
+          <Text style={styles.forgotPassword}  >Forgot password</Text>
+          <View style={{ padding: 10, margin: 5 }}>
+            <Button rounded
+              title='Login'
+              onPress={(e) => this.userLogin(e)}
+              buttonStyle={styles.button} 
+            />
+          </View>
 
           <SocialMedia />
 
-        </Content>
+        </View>
 
       </KeyboardAvoidingView>
     );
@@ -139,7 +156,7 @@ const styles = {
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '40%',
+    height: '35%',
   },
 
   logoStyle: {
@@ -148,13 +165,16 @@ const styles = {
   },
 
   input: {
-    marginBottom: 10,
-    backgroundColor: 'white',
   },
 
   buttonContainer: {
     marginTop: 10,
     padding: 10,
+  },
+  
+  button: {
+    borderRadius: 20,
+    backgroundColor: '#77aef4',
   },
   forgotPassword: {
     textAlign: 'center',

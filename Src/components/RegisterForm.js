@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { Content, Item, Input, Text, Button, H1, Body, } from 'native-base';
 import { View } from 'react-native';
+import { Button, Text, Input, Icon } from 'react-native-elements'
 
 import { withNavigation } from 'react-navigation';
 
@@ -14,12 +14,16 @@ class RegisterForm extends Component {
             lastname: '',
             phonenumber: '',
             password: '',
+            registerError:' ',
         };
     }
     Register() {
 
         if (this.state.email == "" || this.state.firstname == "" || this.state.lastName == "" || this.state.password == "" || this.state.phonenumber == "") {
             alert("fill all the form first before registering")
+            this.setState({
+                registerError: "fill all the form first before registering" 
+              });
         } else {
             this.SendRegistration()
         }
@@ -53,11 +57,9 @@ class RegisterForm extends Component {
     render() {
 
         return (
-            <Content style={styles.container}>
-                <H1>Register</H1>
-
+            <View style={styles.container}>
                 <View style={{ flexDirection: 'row' }}>
-                    <Item
+                    <View
                         style={styles.inputName}>
                         <Input
                             placeholder="FirstName"
@@ -66,10 +68,18 @@ class RegisterForm extends Component {
                             onSubmitEDITING={() => this.passwordInput.focus()}
                             autoCapitalize="none"
                             autoCorrect={false}
-                            onChangeText={(text) => this.setState({ firstname: text })} />
-                    </Item>
+                            onChangeText={(text) => this.setState({ firstname: text })}
+                            leftIcon={
+                                <Icon
+                                    name='md-person'
+                                    type='ionicon'
+                                    color='darkblue'
+                                />
+                            }
+                        />
+                    </View>
 
-                    <Item
+                    <View
                         style={styles.inputName}>
                         <Input
                             placeholder="LastName"
@@ -78,12 +88,20 @@ class RegisterForm extends Component {
                             onSubmitEDITING={() => this.passwordInput.focus()}
                             autoCapitalize="none"
                             autoCorrect={false}
-                            onChangeText={(text) => this.setState({ lastname: text })} />
-                    </Item>
+                            onChangeText={(text) => this.setState({ lastname: text })}
+                            leftIcon={
+                                <Icon
+                                    name='md-person'
+                                    type='ionicon'
+                                    color='darkblue'
+                                />
+                            }
+                        />
+                    </View>
                 </View>
 
 
-                <Item
+                <View
                     style={styles.input}>
                     <Input
                         placeholder="Email"
@@ -93,10 +111,18 @@ class RegisterForm extends Component {
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        onChangeText={(text) => this.setState({ email: text })} />
-                </Item>
+                        onChangeText={(text) => this.setState({ email: text })}
+                        leftIcon={
+                            <Icon
+                                name='md-mail'
+                                type='ionicon'
+                                color='darkblue'
+                            />
+                        }
+                    />
+                </View>
 
-                <Item
+                <View
                     style={styles.input}>
                     <Input
                         placeholder="PhoneNumber"
@@ -106,10 +132,17 @@ class RegisterForm extends Component {
                         keyboardType="phone-pad"
                         autoCapitalize="none"
                         autoCorrect={false}
-                        onChangeText={(text) => this.setState({ phonenumber: text })} />
-                </Item>
+                        onChangeText={(text) => this.setState({ phonenumber: text })}
+                        leftIcon={
+                            <Icon
+                                name='ios-call'
+                                type='ionicon'
+                                color='darkblue'
+                            />
+                        } />
+                </View>
 
-                <Item
+                <View
                     style={styles.input}>
                     <Input
                         placeholder="Password"
@@ -117,22 +150,32 @@ class RegisterForm extends Component {
                         returnKeyType="send"
                         secureTextEntry
                         ref={(input) => this.passwordInput = input}
-                        onChangeText={(text) => this.setState({ password: text })} />
-                </Item>
+                        onChangeText={(text) => this.setState({ password: text })}
+                        leftIcon={
+                            <Icon
+                                name='md-lock'
+                                type='ionicon'
+                                color='darkblue'
+                            />
+                        }
+                        errorStyle={{ color: 'red', textAlign: 'center' }}
+                        errorMessage={this.state.registerError}
+                    />
+                </View>
 
-                <Button block rounded info
-                    onPress={() => this.Register()}
-                    style={styles.buttonContainer}>
-                    <Text> Register </Text>
-                </Button>
+                <View style={{ marginTop: 10, padding: 10, }}>
+                    <Button rounded
+                        title='Register'
+                        onPress={() => this.Register()}
+                        buttonStyle={styles.buttonContainer}
+                    />
+                </View>
 
-                <Body style={styles.buttonContainer}>
-                        <Text onPress={() => this.props.navigation.navigate('Login')}>
-                        Already Registered? Login Here
-                         </Text>
-                </Body>
+                <Text onPress={() => this.props.navigation.navigate('Login')} style={{ textAlign: 'center', marginTop: 10 }}>
+                    Already Registered? Login Here
+                </Text>
 
-            </Content>
+            </View>
         );
     }
 }
@@ -144,22 +187,17 @@ const styles = {
     },
     input: {
         marginBottom: 10,
-        backgroundColor: 'white',
     },
 
     inputName: {
         marginBottom: 10,
-        backgroundColor: 'white',
         width: '50%',
     },
 
     buttonContainer: {
-        marginTop: 10,
-        padding: 10,
+        borderRadius: 20,
+        backgroundColor: '#77aef4' 
     },
 };
-
-
-
 
 export default withNavigation(RegisterForm);

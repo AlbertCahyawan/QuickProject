@@ -1,27 +1,33 @@
-import React, { Component } from 'react'; 
-import { Container, Header , Title, Left, Body, Right, Button, Icon, Text} from "native-base"; 
+import React, { Component } from 'react';  
+import { Header, Text, Icon } from 'react-native-elements';
+
+import {View} from 'react-native';
+
 import OrderHistory from '../components/OrderHistory';
 
 export default class HistoryScreen extends Component {  
 
   render() {
     return (     
-      <Container>
-        <Header>
-          <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
-            </Button>
-          </Left>
-            <Body>
-              <Title>MyOrder</Title>
-            </Body>
-          <Right />
-        </Header>
-
+      <View>
+        
+        <Header
+            outerContainerStyles={{ height: 60, paddingTop: 20 }}
+            leftComponent={
+              <Icon
+                onPress={() => this.props.navigation.goBack()}
+                name='md-arrow-back'
+                type='ionicon'
+                size={15}
+                color='white'
+              />
+            }
+            centerComponent={<Text h4 style={{ color: 'white' }}>MyOrder</Text>}
+            statusBarProps={{ barStyle: 'dark-content', translucent: true }}
+          /> 
         <OrderHistory/>
 
-      </Container>
+      </View>
     );
   }
 } 
@@ -29,3 +35,4 @@ export default class HistoryScreen extends Component {
 const styles = {  
 
 }; 
+ 

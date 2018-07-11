@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
-import { ListItem, Body, Content, Left, Button, Text, Thumbnail, H1, H3, List, } from "native-base";
+import { Image, View } from 'react-native';
+import { Button, Avatar, Text, Divider } from 'react-native-elements';
+
 import { connect } from 'react-redux';
 
 import { bindActionCreators } from 'redux';
@@ -10,76 +11,66 @@ import { logout } from '../actions/auth'
 import userimage from '../assets/ProfileTemplate.png';
 import profilebackground from "../assets/BackgroundDrawer.jpg"
 
-const cacheImages = images => images.map(image => {
-    if (typeof image === 'string') return Image.prefetch(image);
-    return Expo.Asset.fromModule(image).downloadAsync();
-});
 
 class UserInfo extends Component {
     componentDidMount() {
-        this._loadAssetsAsync();
-    }
-
-    async _loadAssetsAsync() {
-        const imageAssets = cacheImages([userimage]);
-        await Promise.all([...imageAssets]);
-        this.setState({ appIsReady: true });
     }
 
     render() {
         return (
-            <Content >  
-                <Thumbnail
-                    square
+            <View >
+                <Image
                     style={{ height: 140, width: "100%" }}
                     source={profilebackground}
-                /> 
+                />
 
-                <Body style={{
+                <View style={{
                     position: "absolute",
                     marginTop: 20,
                     marginBottom: 10,
                     alignSelf: "center",
                 }} >
-                    <Thumbnail source={{uri:"http://188.166.210.104:3000/profileimage/"+this.props.profileimage}}
-                        style={styles.profileImage} />
-                    <H1 style={styles.userName}> {this.props.firstname} {this.props.lastname}</H1>
-                </Body>
- 
-                <List>
 
-                    <ListItem itemDivider style={{
+                    <Avatar
+                        size="medium"
+                        rounded
+                        source={{ uri: "http://188.166.210.104:3000/profileimage/" + this.props.profileimage }}
+                        containerStyle={styles.profileImage}
+                    />
+                    <Text h4 style={styles.userName}> name {this.props.firstname} {this.props.lastname}</Text>
+                </View>
+
+                <View>
+                    <View style={{
                         backgroundColor: 'lightgrey',
+                        height: 30,
                     }} >
-                        <Body>
-                            <Text>Contact Information</Text>
-                        </Body>
-                    </ListItem>
+                        <Text  style={{margin: 5}} >Contact Information</Text>
+                    </View>
+                    <Divider style={{ backgroundColor: 'black' }} />
+                    
+                    <View  >
+                        <Text style={{ margin: 5 }} >Email</Text> 
+                        <Text h4 style={{ margin: 5 }} > email{this.props.email}</Text>
+                    </View>
+                    <Divider style={{ backgroundColor: 'black' }} />
 
-                    <ListItem  >
-                        <Body>
-                            <Text>Email</Text>
-                            <H3>{this.props.email}</H3>
-                        </Body>
-                    </ListItem>
+                    <View >
+                        <Text style={{ margin: 5 }} >Phone</Text> 
+                        <Text h4 style={{ margin: 5 }} >phone{this.props.phonenumber}</Text>
+                    </View>
+                    <Divider style={{ backgroundColor: 'black' }} />
+                </View>
 
-                    <ListItem >
-                        <Body>
-                            <Text>Phone</Text>
-                            <H3>{this.props.phonenumber}</H3>
-                        </Body>
-                    </ListItem>
-                </List>
-
-                <Body>
-                    <Button rounded style={{
-                        margin: 10,
+                <Button rounded
+                    title='Sign Out'
+                    onPress={() => this.props.logout()}
+                    buttonStyle={{
+                        margin: 10, borderRadius: 20, width: '25%'
                     }}
-                        onPress={() => this.props.logout()}>
-                        <Text>Sign Out</Text>
-                    </Button>
-                </Body>
-            </Content>
+                />
+
+            </View>
         );
     }
 }
@@ -87,12 +78,12 @@ class UserInfo extends Component {
 const styles = {
 
     profileImage: {
+        justifyContent: 'center',
         marginLeft: 2,
-        color:'white',
     },
 
-    userName: { 
-        color:'white',
+    userName: {
+        color: 'white',
     }
 
 };

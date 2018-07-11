@@ -1,5 +1,5 @@
  const defaultState = {
-    isLoggedIn: false,
+    isLoggedIn: true,
     id:'',
     email: '', 
     firstname: '',

@@ -1,15 +1,8 @@
-import React, { Component } from 'react';
-import { Content, Thumbnail, Text, Button, } from 'native-base';
+import React, { Component } from 'react'; 
 import { View, FlatList } from 'react-native';
+import {Avatar, Text, Button} from 'react-native-elements';
 
 import { connect } from 'react-redux';
-
-import Food from '../assets/images.jpg';
-
-const cacheImages = images => images.map(image => {
-  if (typeof image === 'string') return Image.prefetch(image);
-  return Expo.Asset.fromModule(image).downloadAsync();
-});
 
 class RestaurantMenu extends Component {
 
@@ -20,19 +13,8 @@ class RestaurantMenu extends Component {
     };
   }
 
-  state = {
-    appIsReady: false
-  }
-
   componentDidMount() {
-    this._loadAssetsAsync();
     this.fetchmenu()
-  }
-
-  async _loadAssetsAsync() {
-    const imageAssets = cacheImages([Food]);
-    await Promise.all([...imageAssets]);
-    this.setState({ appIsReady: true });
   }
 
   AddOrder(menuid) {
@@ -77,29 +59,38 @@ class RestaurantMenu extends Component {
         console.error(error);
       });
   }
-  
+
   render() {
     return (
-      <Content style={styles.foodlistContainer}>
-        <FlatList 
+      <View style={styles.foodlistContainer}>
+        <FlatList
           numColumns={3}
           contentContainerStyle={styles.list}
           data={this.state.dataSource}
           extraData={this.state}
           renderItem={({ item }) =>
             <View style={styles.row}>
-              <Thumbnail square source={{uri:"http://188.166.210.104:3000/Menuimage/" + item.mimage }} />
+              <Avatar
+                size="medium"
+                source={{ uri: "http://188.166.210.104:3000/Menuimage/" + item.mimage }}
+                overlayContainerStyle={{ backgroundColor: 'white' }}
+                activeOpacity={0.7}
+              />
+
               <Text note>{item.mname}</Text>
-              <Button block success
-                onPress={() => this.AddOrder(item.mid)}  >
-                <Text>ADD</Text>
-              </Button>
+
+              <Button 
+              title="ADD"
+              buttonStyle={{backgroundColor:'#0f9302'}}
+              onPress={() => this.AddOrder(item.mid)} 
+              /> 
+
             </View>
           }
           keyExtractor={(item, index) => `key-${index}`}
         />
 
-      </Content>
+      </View>
     );
   }
 }
@@ -109,7 +100,6 @@ const styles = {
   list: {
     justifyContent: 'flex-start',
     flexDirection: 'column',
-    //flexWrap: 'wrap',
     backgroundColor: '#CCC',
   },
 

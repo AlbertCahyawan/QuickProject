@@ -1,16 +1,9 @@
-import React, { Component } from 'react';
-import { Content, Thumbnail, Text, Item, Body, Card, CardItem, Container, Button, Left, ListItem, List, Right, Icon } from 'native-base';
+import React, { Component } from 'react'; 
+import { Icon, Button, Text, Divider, } from 'react-native-elements';
+import { View, FlatList } from 'react-native';
 
 import { connect } from 'react-redux';
-
-import Food from '../assets/restaurant.png';
-
 import { Addingfood } from '../actions/index';
-
-const cacheImages = images => images.map(image => {
-  if (typeof image === 'string') return Image.prefetch(image);
-  return Expo.Asset.fromModule(image).downloadAsync();
-});
 
 class ShoppingCart extends Component {
 
@@ -36,113 +29,81 @@ class ShoppingCart extends Component {
       });
   }
 
-  state = {
-    appIsReady: false
-  }
   componentDidMount() {
     this.fetchorder()
-    this._loadAssetsAsync();
-  }
-
-  async _loadAssetsAsync() {
-    const imageAssets = cacheImages([Food]);
-    await Promise.all([...imageAssets]);
-    this.setState({ appIsReady: true });
   }
 
   render() {
     return (
-      <Content style={styles.billContent}>
-        <List>
-          <ListItem itemDivider thumbnail>
+      <View style={styles.billContent}>
 
-            <Text>Your Order</Text>
-          </ListItem>
+        <View style={{ marginLeft: 5 }}>
+          <Text >Your Order</Text>
+        </View>
 
-          <ListItem>
-            <Body>
-              <Text>Food Name</Text>
-            </Body>
+        <View style={{ backgroundColor: 'white' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start' }} >
 
-            <Body>
-              <Text>Quantity</Text>
-            </Body>
+            <Text>Food Name</Text>
+            <Text>Quantity</Text>
+            <Text>Price</Text>
 
-            <Body>
-              <Text>Price</Text>
-            </Body>
+          </View>
 
-          </ListItem>
+          <Divider style={{ backgroundColor: 'black' }} />
 
-          <List contentContainerStyle={styles.list}
-            dataArray={this.props.bill}
-            renderRow={data => {
-              return (
-                <ListItem noBorder>
-                  <Body>
-                    <Text>{data.fname}</Text>
-                  </Body>
+          <FlatList
+            contentContainerStyle={styles.list}
+            data={this.props.bill}
+            extraData={this.state}
+            renderItem={({ item }) =>
+            
+              <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                <Text>{item.fname}</Text>
+                <Text>{item.Fqty}</Text>
 
-                  <Body>
-                    <Text>{data.Fqty}</Text>
-                  </Body>
-
-                  <Body>
-                    <Text>{data.fprice}</Text>
-                  </Body>
-
-                  <Icon name="trash"
-                    Button onPress={() => alert('Remove')} />
-
-                </ListItem>
-              );
-            }}
+                <View style={{ flexDirection: 'row' }}>
+                  <Text>{item.fprice}</Text>
+                  <Icon
+                    onPress={() => alert('Remove')}
+                    name='md-trash'
+                    type='ionicon'
+                    color='black'
+                  /> 
+                </View> 
+              </View> 
+            }
+            keyExtractor={(item, index) => `key-${index}`}
           />
 
-          <ListItem itemDivider>
+        </View>
 
-          </ListItem>
+        <View style={{
+          flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'flex-start', backgroundColor: 'white', marginTop: 5,
+        }}>
+          <View>
+            <Text>Detailed Bill</Text>
+          </View>
 
-          <ListItem>
-            <Body>
-              <Text>Detailed Bill</Text>
-            </Body>
-          </ListItem>
+          <View noBorder>
+            <Text>Tax</Text>
+            <Text>15.000</Text>
+          </View>
 
-          <ListItem noBorder>
-            <Body>
-              <Text>Tax</Text>
-            </Body>
+          <View>
+            <Text>GrandTotal</Text>
+            <Text>30.000</Text>
+          </View>
 
-            <Body>
-            </Body>
+        </View>
 
-            <Body>
-              <Text>15.000</Text>
-            </Body>
-          </ListItem>
+        <Button
+          title="Order"
+          buttonStyle={styles.orderButton}
+          onPress={() => alert('food ordered')}
+        />
 
-          <ListItem>
-            <Body>
-              <Text>GrandTotal</Text>
-            </Body>
-
-            <Body>
-            </Body>
-
-            <Body>
-              <Text>30.000</Text>
-            </Body>
-          </ListItem>
-
-        </List>
-
-        <Button block primary
-          style={styles.orderButton}
-          Button onPress={() => alert('food ordered')}>
-          <Text>Order</Text>
-        </Button>
-      </Content>
+      </View>
     );
   }
 }
@@ -151,13 +112,13 @@ const styles = {
   billContainer: {
     backgroundColor: 'lightgrey',
   },
-
-
   billContent: {
-    backgroundColor: 'white',
+    height: '100%',
+    backgroundColor: 'lightgrey',
   },
   orderButton: {
     margin: 10,
+    backgroundColor: 'green',
   }
 
 };

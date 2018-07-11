@@ -10,6 +10,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 
 import ProfileScreen from '../screens/ProfileScreen'
 import HistoryScreen from '../screens/HistoryScreen'
+
 import SupportScreen from '../screens/SupportScreen'
 
 import ModalScreen from '../modals/ModalScreen';
@@ -35,18 +36,18 @@ const LoginNav = StackNavigator(
 
 const MainNav = DrawerNavigator(
   { 
-
     Home: { screen: HomeScreen },
     Search: {screen: SearchScreen},
     Profile: { screen: ProfileScreen },
     History: { screen: HistoryScreen },
-    Support: { screen: SupportScreen },
 
+    
+    Support: { screen: SupportScreen },
     MyModal: { screen: ModalScreen },
     test: { screen: testScreen },
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'test',
     contentComponent: props => <SideBar {...props} />,
     drawerPosition: 'left',
     contentOptions: {
@@ -66,7 +67,7 @@ const MainApp = StackNavigator(
     HomeStack: { screen: MainNav },
   },
   {
-    initialRouteName: 'LoginStack',
+    initialRouteName: 'HomeStack',
     headerMode: 'none',
     navigationOptions: () => ({
       header: null

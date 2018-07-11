@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Content, ListItem, Left, Body, Right, Text, Button } from "native-base";
-import {FlatList} from 'react-native';
+
+import { Divider } from 'react-native-elements';
+import { FlatList, View, Text, TouchableNativeFeedback } from 'react-native';
 
 
 import NavigationService from '../Navigation/NavigationService';
@@ -46,33 +47,42 @@ export default class OrderHistory extends Component {
     //             console.error(error);
     //         });
     // }
-    
+
     render() {
         return (
-            <Content> 
-                
-                <FlatList 
+            <View>
+
+                <FlatList
                     data={this.state.dataSource}
                     extraData={this.state}
                     renderItem={({ item }) =>
-                        <ListItem style={styles.OrderContainer}
+                        <TouchableNativeFeedback
                             button onPress={() => NavigationService.navigate('Home', )} >
-                            <Left>
-                                <Body>
-                                    <Text>{item.Hdate}</Text>
-                                    <Text note>{item.Hname}</Text>
-                                </Body>
-                            </Left>
+                            <View style={styles.OrderContainer}>
 
-                            <Right>
-                                <Text>IDR {item.Hprice}</Text>
-                            </Right>
-                        </ListItem>
+                                <View style={{
+                                    width: '50%', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start'
+                                }}>
+                                    <Text>{item.Hdate}</Text>
+                                    <Text style={{ color: 'lightgrey' }}>{item.Hname}</Text>
+                                </View>
+
+                                <View style={{
+                                    width: '50%', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-end'
+                                }}>
+
+                                    <Text>IDR {item.Hprice}</Text>
+                                </View>
+
+                                <Divider style={{ backgroundColor: 'black' }} />
+                            </View>
+                        </TouchableNativeFeedback>
+
                     }
                     keyExtractor={(item, index) => `key-${index}`}
                 />
 
-            </Content>
+            </View>
         );
     }
 }
@@ -80,9 +90,12 @@ export default class OrderHistory extends Component {
 const styles = {
 
     OrderContainer: {
-        backgroundColor: 'white',
-        marginLeft: 5,
-        margin: 5,
+        backgroundColor: 'white', 
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        borderWidth: 1,
+        borderColor:'black',
     },
 
 }; 

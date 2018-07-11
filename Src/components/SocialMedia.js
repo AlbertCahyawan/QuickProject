@@ -1,69 +1,65 @@
-import React, { Component } from 'react';  
- 
-import {View} from 'react-native';
-import {  Text, Button, Icon, Left, Body, Right} from 'native-base'; 
+import React, { Component } from 'react';
+
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 
 import NavigationService from '../Navigation/NavigationService';
 
- export default class SocialMedia extends Component { 
-    render(){
-         return( 
+export default class SocialMedia extends Component {
+    render() {
+        return (
             <View>
-                
-            <Button block rounded info  
-                    onPress={() => NavigationService.navigate('Register', { userName: 'Lucy' }) }
-                    style={styles.buttonContainer}>
-              <Text> SignUp </Text>
-            </Button>  
-             
-            <Body>
-                <Text>Sign in with</Text>
-            </Body>
-            
-            <Body style={styles.socialMediaButtonContainer}> 
-                <Left>
-                <Button iconLeft info
-                        onPress={() => NavigationService.navigate('HomeStack', { Name: 'Jane' })}
-                        style={styles.socialMediaButton}>
-                    <Icon name='logo-facebook' />
-                    <Text>Facebook</Text>
-                </Button>
-                </Left>
+                <View style={{ padding: 10, margin: 5, marginTop: 0, borderRadius: 20, }} >
+                    <Button rounded
+                        title='SignUp'
+                        onPress={() => NavigationService.navigate('Register', { userName: 'Lucy' })}
+                        buttonStyle={styles.buttonContainer} />
+                </View>
 
-                <Right>
-                <Button iconLeft info
-                        onPress={() => NavigationService.navigate('HomeStack', { Name: 'Jane' })}
-                        style={styles.socialMediaButton}>
-                    <Icon name="logo-googleplus" />
-                    <Text>Google</Text>
-                </Button>
-                </Right> 
+                <Text style={{ textAlign: 'center', color: 'grey' }}>- - - -Or- - - -</Text>
+                <Text style={{ textAlign: 'center' }}>Sign In With</Text>
 
-           </Body> 
+                <View style={styles.socialMediaButtonContainer}>
 
-           </View>
-         );
-     }
+                    <View style={{ padding: 10, margin: 10 }}>
+                        <Button
+                            title='Facebook'
+                            onPress={() => NavigationService.navigate('HomeStack', { Name: 'Jane' })}
+                            buttonStyle={styles.socialMediaButton}
+                            icon={{ name: 'logo-facebook', type: 'ionicon', color: 'white' }} 
+                        />
+                    </View>
 
+                    <View style={{ padding: 10, margin: 10 }}>
+                        <Button
+                            title='Google'
+                            onPress={() => NavigationService.navigate('HomeStack', { Name: 'Jane' })}
+                            buttonStyle={styles.socialMediaButton}
+                            icon={{ name: 'logo-google', type: 'ionicon', color: 'white' }}
+                        />
+                    </View>
+
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = {
 
-    buttonContainer: {  
-        marginTop: 10,
-        padding: 10, 
+    buttonContainer: {
+        backgroundColor: '#77aef4'
     },
- 
-    socialMediaButtonContainer: {  
-        alignItems:'center',
-        justifyContent:'center', 
-        flexDirection: 'row',
-    }, 
 
-    socialMediaButton: {  
-      marginTop: 10,
-      padding: 10,   
-    },  
- 
-}; 
- 
+    socialMediaButtonContainer: {
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        flexDirection: 'row',
+    },
+
+    socialMediaButton: {
+        backgroundColor: '#77aef4'
+    },
+
+};
+
